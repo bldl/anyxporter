@@ -12,10 +12,9 @@ namespace datasrc
 {
   void open(Db& db);
   void close(Db& db);
-  void makeSeq(Db& db, Seq& seq);
-  void isEmpty(const Seq& seq, bool& res);
-  void head(const Seq& seq, Entry& h);
-  void tail(const Seq& seq, Seq& t);
+  void iterator(Db& db, Iter& iter);
+  void atEof(const Iter& iter, bool& res);
+  void next(Iter& iter, Entry& h);
   //  void pushAsLuaObj(const Entry& e, script::Vm& vm);
   //  void toString(script::Vm& vm, text::String& s);
 }

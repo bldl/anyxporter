@@ -5,7 +5,7 @@
 namespace datasrc
 {
   typedef int Db;
-  typedef int Seq;
+  typedef int Iter;
   typedef int Entry;
 }
 

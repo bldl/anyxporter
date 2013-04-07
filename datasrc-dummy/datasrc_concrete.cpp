@@ -1,5 +1,7 @@
 #include "abstract.hpp"
 
+#include <assert.h>
+
 namespace datasrc
 {
 
@@ -7,13 +9,13 @@ namespace datasrc
 
   void close(Db& db) {}
 
-  void makeSeq(Db& db, Seq& seq) {}
+  void iterator(Db& db, Iter& iter) {}
 
-  void isEmpty(const Seq& seq, bool& r) { r = true; }
+  void atEof(const Iter& iter, bool& res) { res = true; }
 
-  void head(const Seq& seq, Entry& h) {}
-
-  void tail(const Seq& seq, Seq& t) {}
+  void next(Iter& iter, Entry& h) {
+    assert(false && "iteration past end");
+  }
 
 }
 
