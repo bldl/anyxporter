@@ -11,7 +11,7 @@ namespace datasrc
 
   void iterator(Db& db, Iter& iter) {}
 
-  void atEof(const Iter& iter, bool& res) { res = true; }
+  void atEof(Iter const& iter, bool& res) { res = true; }
 
   void next(Iter& iter, Entry& h) {
     assert(false && "iteration past end");

@@ -2,7 +2,7 @@
 # generated depending on configuration.
 
 PROG := exportemplapp
-SRCDIRS := src datasrc-dummy engine-hw console-ui
+SRCDIRS := src console-ui datasrc-dummy engine-hw filesys-cxx
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
 CXXFLAGS := -Wall -std=c++0x
 LDFLAGS := 
