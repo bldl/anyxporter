@@ -5,6 +5,8 @@
 .DS_Store
 .depend
 Makefile
+local.mk
+qt.mk
 exportemplapp
 *.pro.user
 *.o

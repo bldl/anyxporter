@@ -32,5 +32,11 @@ $(PROG) : $(OBJFILES)
 %.o : %.cpp
 	g++ -c $(CXXFLAGS) $(DEPFLAGS) -o $@ $<
 
+qt.mk :
+	qmake -o qt.mk
+
+qtbuild : qt.mk
+	make -f qt.mk
+
 clean :
-	-rm $(PROG) $(OBJFILES)
+	-rm $(PROG) $(OBJFILES) qt.mk

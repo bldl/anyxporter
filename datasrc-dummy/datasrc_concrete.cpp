@@ -5,15 +5,15 @@
 namespace datasrc
 {
 
-  void open(Db& db) {}
+  void open(Db& /*db*/) {}
 
-  void close(Db& db) {}
+  void close(Db& /*db*/) {}
 
-  void iterator(Db& db, Iter& iter) {}
+  void iterator(Db& /*db*/, Iter& /*iter*/) {}
 
-  void atEof(Iter const& iter, bool& res) { res = true; }
+  void atEof(Iter const& /*iter*/, bool& res) { res = true; }
 
-  void next(Iter& iter, Entry& h) {
+  void next(Iter& /*iter*/, Entry& /*h*/) {
     assert(false && "iteration past end");
   }
 
