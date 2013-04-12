@@ -2,6 +2,8 @@
 
 #include "abstract.hpp"
 
+#include <iostream>
+
 namespace engine
 {
   void exportData() {
@@ -18,6 +20,7 @@ namespace engine
       if (r) break;
       datasrc::Entry e;
       datasrc::next(iter, e);
+      std::cout << "read entry" << std::endl;
       dataout::Bytes b = ""; // xxx
       dataout::NumBytes n = 0; // xxx
       dataout::fileAppend(file, b, n);

@@ -2,7 +2,7 @@
 # generated depending on configuration.
 
 PROG := exportemplapp
-SRCDIRS := src console-ui datasrc-dummy engine-hw filesys-cxx
+SRCDIRS := src console-ui datasrc-qt engine-hw filesys-cxx
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
 CXXFLAGS := -Wall -std=c++0x
 LDFLAGS := 
@@ -31,6 +31,9 @@ $(PROG) : $(OBJFILES)
 
 %.o : %.cpp
 	g++ -c $(CXXFLAGS) $(DEPFLAGS) -o $@ $<
+
+qmake :
+	qmake -o qt.mk
 
 qt.mk :
 	qmake -o qt.mk

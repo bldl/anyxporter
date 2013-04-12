@@ -1,14 +1,18 @@
 QT       += core
 QT       -= gui
 
-TARGET = exportemplapp
 CONFIG   += console
 CONFIG   -= app_bundle
+
+CONFIG   += mobility
+MOBILITY = contacts
+
+TARGET = exportemplapp
 QMAKE_CXXFLAGS += -std=c++0x
 
 TEMPLATE = app
 
-COMPPATHS = src qtconsole-ui datasrc-dummy engine-hw filesys-cxx
+COMPPATHS = src qtconsole-ui datasrc-qt engine-hw filesys-cxx
 INCLUDEPATH = $$COMPPATHS
 DEPENDPATH = $$COMPPATHS
 HEADERS += abstract.hpp datasrc_concrete.hpp engine.hpp filesys_concrete.hpp
