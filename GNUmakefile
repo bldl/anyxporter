@@ -12,6 +12,8 @@ GENFILES :=
 
 default : build
 
+-include local.mk
+
 .depend : GNUmakefile $(GENFILES)
 	fastdep $(DEPFLAGS) --remakedeptarget=$@ $(SRCFILES) > $@
 
