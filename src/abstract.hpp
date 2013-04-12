@@ -23,7 +23,7 @@ namespace dataout
   void fileOpenTruncate(File& f, Path const& p);
   void fileCreateTempFile(File& f);
   void fileClose(File& f);
-  //void fileAppend(File& f, Bytes& s);
+  void fileAppend(File& f, Bytes const& s, NumBytes const& n);
   void btObexPushFile(File& f);
 }
 

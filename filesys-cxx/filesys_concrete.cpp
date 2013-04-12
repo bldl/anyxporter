@@ -11,5 +11,9 @@ namespace dataout
   void fileClose(File& f) {
     f.close();
   }
+
+  void fileAppend(File& f, Bytes const& s, NumBytes const& n) {
+    f.write(s, n);
+  }
 }
 

@@ -13,6 +13,9 @@ namespace dataout
   // have to use a RAII wrapper to do deletion, using 'remove',
   // probably storing filename in a std::string.
   typedef std::ofstream File;
+
+  typedef char const* Bytes;
+  typedef std::streamsize NumBytes;
 }
 
 #endif /* __filesys_concrete_hpp__ */
