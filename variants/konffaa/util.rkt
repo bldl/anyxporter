@@ -22,6 +22,12 @@
 (define* (symbol<? s1 s2)
   (string<? (symbol->string s1) (symbol->string s2)))
 
+(define* (symbol-sort lst)
+  (sort lst symbol<?))
+
+(define* (sublist? s lst)
+  (true? (andmap (lambda (x) (memq x lst)) s)))
+
 #|
 
 Copyright 2009 Helsinki Institute for Information Technology (HIIT)
