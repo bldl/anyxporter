@@ -8,5 +8,7 @@ Makefile
 local.mk
 qt.mk
 exportemplapp
+current_config.*
+current.var.rkt
 *.pro.user
 *.o

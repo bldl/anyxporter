@@ -1,8 +1,16 @@
-# The primary makefile for this project. A 'Makefile' (if any) is
-# generated depending on configuration.
+# The primary makefile for this project. Plain C++ builds are handled
+# directly here, whereas builds for specific toolkits and platforms
+# are handled by invoking their respective tools from here.
 
-PROG := exportemplapp
-SRCDIRS := src console-ui datasrc-qt engine-hw filesys-cxx
+default : build
+
+# generate for default variant if does not exist at all
+src/current_config.mk :
+	./configure.sh cxx-dummy
+
+include src/current_config.mk
+
+PROG := $(APP_BASENAME)
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
 CXXFLAGS := -Wall -std=c++0x
 LDFLAGS := 
@@ -10,21 +18,32 @@ SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS)))
 OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
 GENFILES := 
 
-default : build
-
 -include local.mk
+
+# regenerate for current variant
+config : 
+	./configure.sh $(VARIANT_NAME)
 
 .depend : GNUmakefile $(GENFILES)
 	fastdep $(DEPFLAGS) --remakedeptarget=$@ $(SRCFILES) > $@
 
 -include .depend
 
-build : $(PROG)
+ifeq ($(WITH_QMAKE),true)
+  BUILD_RULE := qt-build
+else
+  BUILD_RULE := $(PROG)
+endif
+
+build : $(BUILD_RULE)
 
 info:
-	@echo $(PROG)
-	@echo $(OBJFILES)
-	@echo $(SRCFILES)
+	@echo "PROGRAM  :" $(PROG)
+	@echo "VERSION  :" $(VERSION_STRING)
+	@echo "VARIANT  :" $(VARIANT_NAME)
+	@echo "SRCDIRS  :" $(SRCDIRS)
+	@echo "OBJFILES :" $(OBJFILES)
+	@echo "SRCFILES :" $(SRCFILES)
 
 $(PROG) : $(OBJFILES)
 	g++ -o $@ $(OBJFILES) $(LDFLAGS)
@@ -35,11 +54,12 @@ $(PROG) : $(OBJFILES)
 qmake :
 	qmake -o qt.mk
 
-qt.mk :
+qt.mk : $(APP_BASENAME).pro src/current_config.pri
 	qmake -o qt.mk
 
-qtbuild : qt.mk
+qt-build : qt.mk
 	make -f qt.mk
 
 clean :
-	-rm $(PROG) $(OBJFILES) qt.mk
+	-rm $(PROG) $(OBJFILES) qt.mk .depend
+

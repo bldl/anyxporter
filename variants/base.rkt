@@ -54,9 +54,15 @@ project must implement.
     #f)
 
   (define/public (with-qt-mobility.attr)
-    #f)
+    (with-qt.attr))
 
   (define/public (with-qmake.attr)
+    (with-qt.attr))
+
+  (define/public (with-gnumake.attr)
+    (not (with-qmake.attr)))
+
+  (define/public (with-magnolia.attr)
     #f)
 
   ;; features...
@@ -67,6 +73,13 @@ project must implement.
   (define/public (feature-debugging.attr)
     #f)
 
+  ;; build...
+  
+  (define/public (srcdirs.attr)
+    (list "src"
+          (if (with-magnolia.attr) "engine-mg" "engine-hw")
+          "filesys-cxx"))
+  
   ) ;; end project-variant%
 
 #|
