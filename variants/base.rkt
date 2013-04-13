@@ -47,6 +47,12 @@ project must implement.
   (define/public (is-harmattan.attr) (eq? (platform) 'harmattan))
   
   (define/public (is-symbian.attr) (eq? (platform) 'symbian))
+
+  (define/public (is-device.attr)
+    (true? (memq (platform) '(harmattan symbian))))
+  
+  (define/public (is-qt-simulator.attr)
+    (eq? (platform) 'qt-simulator))
   
   ;; tools and libraries...
   

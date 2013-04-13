@@ -30,7 +30,11 @@ config :
 -include .depend
 
 ifeq ($(WITH_QMAKE),true)
-  BUILD_RULE := qt-build
+  ifeq ($(IS_QT_SIMULATOR),true)
+    BUILD_RULE := qt-simulator-build
+  else
+    BUILD_RULE := qt-build
+  endif
 else
   BUILD_RULE := $(PROG)
 endif
@@ -59,6 +63,9 @@ qt.mk : $(APP_BASENAME).pro src/current_config.pri
 
 qt-build : qt.mk
 	make -f qt.mk
+
+qt-simulator-build : qt.mk
+	@echo "NOTE:" use Qt Creator to build for Qt simulator
 
 clean :
 	-rm $(PROG) $(OBJFILES) qt.mk .depend
