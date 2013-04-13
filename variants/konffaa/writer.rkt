@@ -90,7 +90,7 @@
    file
    (capture
     (display-generated-notice ";;")
-    (displayln "#lang scheme")
+    (displayln "#lang racket")
     (disp-nl "(require ~s)" target)
     (disp-nl "(provide (all-from-out ~s))" target))))
 
