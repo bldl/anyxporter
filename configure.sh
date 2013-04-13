@@ -2,7 +2,7 @@
 
 SRCDIR=$(dirname $(readlink -f $0))
 cd $SRCDIR
-exec racket --name "$0" --require konffaa/configure.rkt --main -- ${1+"$@"}
+exec racket --name "$0" --search "$SRCDIR" --require konffaa/configure.rkt --main -- ${1+"$@"}
 
 # INTRODUCTION
 # 
