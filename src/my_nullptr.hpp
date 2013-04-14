@@ -1,5 +1,5 @@
-#ifndef __nullptr_hpp__
-#define __nullptr_hpp__
+#ifndef __my_nullptr_hpp__
+#define __my_nullptr_hpp__
 
 // http://gcc.gnu.org/gcc-4.6/changes.html
 #if (defined(__GNUC__) && \
@@ -25,5 +25,5 @@ private:
 } nullptr = {};
 #endif
 
-#endif /* __nullptr_hpp__ */
+#endif /* __my_nullptr_hpp__ */
 
