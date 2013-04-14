@@ -13,10 +13,14 @@ config-default :
 
 include src/current_config.mk
 
+LUA_CFLAGS := -I/usr/include/lua5.1
+LUA_LDFLAGS := -llua5.1
+
 PROG := $(APP_BASENAME)
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
-CXXFLAGS := -Wall -std=c++0x
-LDFLAGS := 
+CFLAGS := -Wall $(LUA_CFLAGS)
+CXXFLAGS := $(CFLAGS) -std=c++0x
+LDFLAGS := $(LUA_LDFLAGS)
 SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS)))
 HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS)))
 OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
@@ -80,3 +84,5 @@ qt-simulator-build : qt.mk
 clean :
 	-rm $(PROG) $(OBJFILES) qt.mk .depend
 
+install :
+	sudo aptitude install liblua5.1-0 liblua5.1-0-dev
