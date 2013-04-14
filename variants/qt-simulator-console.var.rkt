@@ -27,7 +27,7 @@ apparently.
   
     (define/override (srcdirs.attr)
       (append (super srcdirs.attr)
-              (list "qtconsole-ui"
+              (list "ui-qtconsole"
                     "datasrc-qt")))
     
     )) ;; end class
