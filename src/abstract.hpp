@@ -18,13 +18,19 @@ namespace datasrc
   //  void toString(script::Vm& vm, text::String& s);
 }
 
-namespace dataout
+namespace filesys
 {
   void fileOpenTruncate(File& f, Path const& p);
   void fileCreateTempFile(File& f);
   void fileClose(File& f);
   void fileAppend(File& f, Bytes const& s, NumBytes const& n);
+}
+
+/*
+namespace btobexpush
+{
   void btObexPushFile(File& f);
 }
+*/
 
 #endif /* __abstract_hpp__ */

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-namespace dataout
+namespace filesys
 {
   typedef char const* Path;
 

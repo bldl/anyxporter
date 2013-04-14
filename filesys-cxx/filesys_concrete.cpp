@@ -2,7 +2,7 @@
 
 using std::ios_base;
 
-namespace dataout
+namespace filesys
 {
   void fileOpenTruncate(File& f, Path const& p) {
     f.open(p, ios_base::out | ios_base::trunc | ios_base::binary);
