@@ -31,11 +31,10 @@ TEMPLATE = app
 INCLUDEPATH = $$SRCDIRS
 DEPENDPATH = $$SRCDIRS
 
-# xxx could have makefile generate include file specifying these
-HEADERS += abstract.hpp datasrc_concrete.hpp engine.hpp filesys_concrete.hpp
-SOURCES += main.cpp datasrc.cpp datasrc_concrete.cpp engine.cpp filesys_concrete.cpp
+include(src/source_list.pri)
 
-OTHER_FILES += \
+IS_HARMATTAN {
+  OTHER_FILES += \
     qtc_packaging/debian_harmattan/rules \
     qtc_packaging/debian_harmattan/README \
     qtc_packaging/debian_harmattan/manifest.aegis \
@@ -43,3 +42,4 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
+}

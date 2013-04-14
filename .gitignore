@@ -10,5 +10,6 @@ qt.mk
 exportemplapp
 current_config.*
 current.var.rkt
+source_list.pri
 *.pro.user
 *.o

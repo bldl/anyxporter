@@ -15,6 +15,7 @@ DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
 CXXFLAGS := -Wall -std=c++0x
 LDFLAGS := 
 SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS)))
+HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS)))
 OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
 GENFILES := 
 
@@ -56,13 +57,15 @@ $(PROG) : $(OBJFILES)
 	g++ -c $(CXXFLAGS) $(DEPFLAGS) -o $@ $<
 
 qmake :
+	echo 'SOURCES +=' $(foreach x, $(SRCFILES), $(shell basename $(x))) > src/source_list.pri
+	echo 'HEADERS +=' $(foreach x, $(HDRFILES), $(shell basename $(x))) >> src/source_list.pri
 	qmake -o qt.mk
 
 qt.mk : $(APP_BASENAME).pro src/current_config.pri
-	qmake -o qt.mk
+	$(MAKE) qmake
 
 qt-build : qt.mk
-	make -f qt.mk
+	$(MAKE) -f qt.mk
 
 qt-simulator-build : qt.mk
 	@echo "NOTE:" use Qt Creator to build for Qt simulator
