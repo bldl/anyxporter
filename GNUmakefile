@@ -56,13 +56,17 @@ $(PROG) : $(OBJFILES)
 %.o : %.cpp
 	g++ -c $(CXXFLAGS) $(DEPFLAGS) -o $@ $<
 
-qmake :
+define do-qmake
 	echo 'SOURCES +=' $(foreach x, $(SRCFILES), $(shell basename $(x))) > src/source_list.pri
 	echo 'HEADERS +=' $(foreach x, $(HDRFILES), $(shell basename $(x))) >> src/source_list.pri
 	qmake -o qt.mk
+endef
+
+qmake :
+	$(do-qmake)
 
 qt.mk : $(APP_BASENAME).pro src/current_config.pri
-	$(MAKE) qmake
+	$(do-qmake)
 
 qt-build : qt.mk
 	$(MAKE) -f qt.mk
