@@ -60,7 +60,7 @@ project must implement.
     #f)
 
   (define/public (with-qt-mobility.attr)
-    (with-qt.attr))
+    #f)
 
   (define/public (with-qmake.attr)
     (with-qt.attr))

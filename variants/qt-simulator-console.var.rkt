@@ -25,6 +25,9 @@ apparently.
     (define/override (with-qt.attr)
       #t)
   
+    (define/override (with-qt-mobility.attr)
+      #t)
+  
     (define/override (srcdirs.attr)
       (append (super srcdirs.attr)
               (list "ui-qtconsole"
