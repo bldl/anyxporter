@@ -8,6 +8,9 @@ default : build
 src/current_config.mk :
 	./configure.sh cxx-dummy
 
+config-default :
+	./configure.sh cxx-dummy
+
 include src/current_config.mk
 
 PROG := $(APP_BASENAME)
