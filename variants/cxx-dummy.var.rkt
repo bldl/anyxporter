@@ -18,7 +18,7 @@ to export data.
     
     (define/override (srcdirs.attr)
       (append (super srcdirs.attr)
-              (list "console-ui"
+              (list "ui-console"
                     "datasrc-dummy")))
     
     )) ;; end class
