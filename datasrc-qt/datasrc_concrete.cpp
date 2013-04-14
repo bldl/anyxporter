@@ -7,15 +7,24 @@ namespace datasrc
 {
 
   void open(Db& db) {
-    db = new QContactManager(nullptr);
+    db = std::move(unique_ptr<QContactManager>
+		   (new QContactManager(nullptr)));
   }
 
   void close(Db& db) {
-    delete db;
+    db.reset();
   }
 
+#if 0
+  void test(Db& outDb) {
+    Db db;
+    open(db);
+    outDb = std::move(db); // cannot assign w/o move
+  }
+#endif
+
   void iterator(Db& db, Iter& iter) {
-    iter.db = db; // non-owned pointer
+    iter.db = db.get(); // non-owned pointer
     iter.lst = db->contactIds();
     iter.nextIx = 0;
   }
