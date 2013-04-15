@@ -13,8 +13,10 @@ config-default :
 
 include src/current_config.mk
 
-LUA_CFLAGS := -I/usr/include/lua5.1
-LUA_LDFLAGS := -llua5.1
+#LUA_CFLAGS := -I/usr/include/lua5.1
+#LUA_LDFLAGS := -llua5.1
+LUA_CFLAGS := $(shell pkg-config --cflags lua5.1)
+LUA_LDFLAGS := $(shell pkg-config --libs lua5.1)
 
 PROG := $(APP_BASENAME)
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
