@@ -23,9 +23,8 @@ namespace engine
       datasrc::next(iter, e);
       std::cout << "read entry" << std::endl;
       datasrc::entryToLua(e, L);
-      filesys::Bytes b = ""; // xxx
-      filesys::NumBytes n = 0; // xxx
-      filesys::fileAppend(file, b, n);
+      filesys::Bytes b = std::string(); // xxx
+      filesys::fileAppend(file, b);
     }
   }
 } // end namespace engine

@@ -12,8 +12,8 @@ namespace filesys
     f.close();
   }
 
-  void fileAppend(File& f, Bytes const& s, NumBytes const& n) {
-    f.write(s, n);
+  void fileAppend(File& f, Bytes const& s) {
+    f.write(s.data(), s.size());
   }
 }
 

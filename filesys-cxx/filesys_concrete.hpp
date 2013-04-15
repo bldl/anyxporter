@@ -14,8 +14,7 @@ namespace filesys
   // probably storing filename in a std::string.
   typedef std::ofstream File;
 
-  typedef char const* Bytes;
-  typedef std::streamsize NumBytes;
+  typedef std::string Bytes;
 }
 
 #endif /* __filesys_concrete_hpp__ */
