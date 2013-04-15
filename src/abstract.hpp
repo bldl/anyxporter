@@ -6,6 +6,11 @@
 */
 #include "datasrc_concrete.hpp"
 #include "filesys_concrete.hpp"
+#include "my_lua.h"
+
+// Lua stack objects are used as the common IR. Hence this definition
+// is the same for all our concepts.
+typedef LuaStateSmart LuaState;
 
 namespace datasrc
 {
@@ -14,8 +19,10 @@ namespace datasrc
   void iterator(Db& db, Iter& iter);
   void atEof(Iter const& iter, bool& res);
   void next(Iter& iter, Entry& h);
-  //  void pushAsLuaObj(const Entry& e, script::Vm& vm);
-  //  void toString(script::Vm& vm, text::String& s);
+
+  // Data source and entry format tend to be coupled,
+  // so we have this as part of the concept.
+  void entryToLua(Entry const& e, LuaState& st);
 }
 
 namespace filesys
@@ -27,6 +34,7 @@ namespace filesys
 }
 
 /*
+// We need temp file support for this and other output options.
 namespace btobexpush
 {
   void btObexPushFile(File& f);

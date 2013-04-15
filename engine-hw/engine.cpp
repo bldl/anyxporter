@@ -7,8 +7,9 @@
 namespace engine
 {
   void exportData() {
+    auto L = my_lua_newstate_smart();
     datasrc::Db db;
-    datasrc::open(db); // xxx does magnolia expect a dtor for a type?
+    datasrc::open(db);
     datasrc::Iter iter;
     datasrc::iterator(db, iter);
     filesys::File file;
@@ -21,12 +22,11 @@ namespace engine
       datasrc::Entry e;
       datasrc::next(iter, e);
       std::cout << "read entry" << std::endl;
+      datasrc::entryToLua(e, L);
       filesys::Bytes b = ""; // xxx
       filesys::NumBytes n = 0; // xxx
       filesys::fileAppend(file, b, n);
     }
-    filesys::fileClose(file);
-    datasrc::close(db); // xxx must ensure this gets called, or if we have a dtor do not need this at all
   }
 } // end namespace engine
 

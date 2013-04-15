@@ -22,6 +22,17 @@
   auto L = my_lua_newstate_smart();
   ...
   L.reset();
+
+  {
+  auto L = my_lua_newstate_smart();
+  ...
+  }
+
+  // Can load any pure Lua routines from a file.
+  // (Packaging and deployment are a hassle then, though.)
+  int err = luaL_loadfile(L, filename); // 0 on success
+  // Afterwards can use lua_getfield to get a function from globals,
+  // and then use lua_pcall to call the appropriate function.
 */
 
 #ifdef __cplusplus
@@ -59,6 +70,8 @@ lua_State* my_lua_newstate_throwing();
 typedef std::function<void(lua_State*)> lua_deleter_t;
 
 std::unique_ptr<lua_State, lua_deleter_t> my_lua_newstate_smart();
+
+typedef std::unique_ptr<lua_State, lua_deleter_t> LuaStateSmart;
 #endif
 
 #endif /* __my_lua_h__ */
