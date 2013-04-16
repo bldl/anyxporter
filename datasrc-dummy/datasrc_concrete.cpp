@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+// A dummy data source.
 namespace datasrc
 {
 
@@ -15,6 +16,11 @@ namespace datasrc
 
   void next(Iter& /*iter*/, Entry& /*h*/) {
     assert(false && "iteration past end");
+  }
+
+  void entryToLua(Entry const& e, LuaState& st) {
+    lua_State* const L = st.get();
+    lua_createtable(L, 0, 0);
   }
 
 }
