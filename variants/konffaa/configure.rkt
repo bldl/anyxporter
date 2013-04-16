@@ -12,19 +12,32 @@ A configuration tool. Derived from ContextLogger2's Konffaile tool.
 (require "writer.rkt")
 (require racket/cmdline)
 
-(define variant-name (make-parameter #f))
-
 ;; --------------------------------------------------
 ;; variant management
 ;; --------------------------------------------------
 
 (define variant-dir (build-path "variants"))
 
+(define (get-variant-name p)
+  (let-values 
+      (((base name dir) (split-path p)))
+    (when dir
+      (error "expected file, not a directory" p))
+    (define m (regexp-match #rx"^(.*)[.]var[.](?:rkt|scm|ss)$" name))
+    (unless m
+      (error "cannot derive variant name from path" p))
+    (second m)))
+
 (define (get-variant-basename varname)
   (format "~a.var.rkt" varname))
 
 (define (get-variant-file varname)
   (build-path variant-dir (get-variant-basename varname)))
+
+(define (resolve-variant x)
+  (if (file-exists? x)
+      (values (get-variant-name x) (build-path x))
+      (values x (get-variant-file x))))
 
 (define variant-symlink-file (get-variant-file "current"))
 
@@ -54,13 +67,15 @@ A configuration tool. Derived from ContextLogger2's Konffaile tool.
 ;; --------------------------------------------------
 
 (define* (main . argv)
-  (command-line
-   #:argv argv
-   #:args (config_name) (variant-name config_name))
+  (define vararg
+    (command-line
+     #:argv argv
+     #:args (config_name) config_name))
 
-  (let* ((varname (variant-name))
-         (varfile (get-variant-file varname))
-         (varinfo-f (dynamic-require (path->string varfile) 'info))
+  (define-values (varname varfile)
+    (resolve-variant vararg))
+  
+  (let* ((varinfo-f (dynamic-require (path->string varfile) 'info))
          (varinfo (varinfo-f))
          (set-name (class-field-mutator variant% name)))
     (set-name varinfo (string->symbol varname))
