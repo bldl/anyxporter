@@ -33,7 +33,43 @@ namespace filesys
     lua_call(L, 0, 0);
   }
 
-  void luaToBytes(LuaState& st, Bytes& s) {
+  static void luaGetString(LuaState& st, Bytes& s, char const* n) {
+    lua_State* const L = st.get();
+    lua_getglobal(L, n);
+    if (lua_isnil(L, -1)) {
+      s = std::string();
+      lua_pop(L, 1);
+    } else if (lua_isstring(L, -1)) {
+      size_t len;
+      char const* const cs = lua_tolstring(L, -1, &len);
+      assert(cs && "Lua was supposed to get a string");
+      s = std::string(cs, len);
+      lua_pop(L, 1);
+    } else if (lua_isfunction(L, -1)) {
+      lua_call(L, 0, 1); // require exactly one result
+      if (!lua_isstring(L, -1))
+	throw std::runtime_error
+	  ("pre/postamble function must produce a string value");
+      size_t len;
+      char const* const cs = lua_tolstring(L, -1, &len);
+      assert(cs && "Lua was supposed to get a string");
+      s = std::string(cs, len);
+      lua_pop(L, 1);
+    } else {
+      throw std::runtime_error
+	("pre/postamble must be a string or function");
+    }
+  }
+
+  void luaPreambleToBytes(LuaState& st, Bytes& s) {
+    return luaGetString(st, s, "preamble_string");
+  }
+
+  void luaPostambleToBytes(LuaState& st, Bytes& s) {
+    return luaGetString(st, s, "postamble_string");
+  }
+
+  void luaEntryToBytes(LuaState& st, Bytes& s) {
     lua_State* const L = st.get();
     lua_getglobal(L, "entry_to_string");
     if (lua_isnil(L, -1))

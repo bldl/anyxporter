@@ -16,6 +16,9 @@ namespace engine
     filesys::File file;
     filesys::Path path = "outfile";
     filesys::fileOpenTruncate(file, path);
+    filesys::Bytes b;
+    filesys::luaPreambleToBytes(L, b);
+    filesys::fileAppend(file, b);
     for (;;) {
       bool r;
       datasrc::atEof(iter, r);
@@ -24,10 +27,11 @@ namespace engine
       datasrc::next(iter, e);
       //std::cout << "read entry" << std::endl;
       datasrc::entryToLua(e, L);
-      filesys::Bytes b;
-      filesys::luaToBytes(L, b);
+      filesys::luaEntryToBytes(L, b);
       filesys::fileAppend(file, b);
     }
+    filesys::luaPostambleToBytes(L, b);
+    filesys::fileAppend(file, b);
   }
 } // end namespace engine
 

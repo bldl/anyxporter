@@ -40,5 +40,16 @@ namespace datasrc
     h = iter.db->contact(id);
   }
 
+  void entryToLua(Entry const& e, LuaState& st) {
+    lua_State* const L = st.get();
+    lua_createtable(L, 2, 0);
+    /*
+    lua_pushstring(L, e.lastName);
+    lua_setfield(L, -2, "last_name");
+    lua_pushstring(L, e.firstName);
+    lua_setfield(L, -2, "first_name");
+    */
+  }
+
 }
 
