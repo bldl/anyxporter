@@ -22,7 +22,7 @@ namespace engine
       if (r) break;
       datasrc::Entry e;
       datasrc::next(iter, e);
-      std::cout << "read entry" << std::endl;
+      //std::cout << "read entry" << std::endl;
       datasrc::entryToLua(e, L);
       filesys::Bytes b;
       filesys::luaToBytes(L, b);
