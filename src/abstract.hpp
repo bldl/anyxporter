@@ -8,12 +8,17 @@
 #include "filesys_concrete.hpp"
 #include "my_lua.h"
 
-// Lua stack objects are used as the common IR. Hence this definition
-// is the same for all our concepts.
-typedef LuaStateSmart LuaState;
+namespace luastate
+{
+  typedef LuaStateSmart LuaState;
+
+  void init(LuaState& st);
+}
 
 namespace datasrc
 {
+  typedef luastate::LuaState LuaState;
+
   void open(Db& db);
   void close(Db& db);
   void iterator(Db& db, Iter& iter);
@@ -27,6 +32,8 @@ namespace datasrc
 
 namespace filesys
 {
+  typedef luastate::LuaState LuaState;
+
   void luaLoadFormatter(LuaState& st);
   void luaPreambleToBytes(LuaState& st, Bytes& s);
   void luaPostambleToBytes(LuaState& st, Bytes& s);

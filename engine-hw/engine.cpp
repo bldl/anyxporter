@@ -7,7 +7,8 @@
 namespace engine
 {
   void exportData() {
-    auto L = my_lua_newstate_smart();
+    luastate::LuaState L;
+    luastate::init(L);
     filesys::luaLoadFormatter(L);
     datasrc::Db db;
     datasrc::open(db);
