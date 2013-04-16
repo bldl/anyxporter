@@ -22,7 +22,7 @@ namespace filesys
 
   void luaLoadFormatter(LuaState& st) {
     lua_State* const L = st.get();
-    int err = luaL_loadfile(L, "lua-src/mock_convert.lua");
+    int err = luaL_loadfile(L, "lua-src/contact_to_xml.lua");
     if (err) {
       char const* const cs = lua_tostring(L, -1);
       std::string errString(cs);
