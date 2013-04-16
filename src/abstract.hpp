@@ -39,17 +39,9 @@ namespace filesys
   void luaPostambleToBytes(LuaState& st, Bytes& s);
   void luaEntryToBytes(LuaState& st, Bytes& s);
   void fileOpenTruncate(File& f, Path const& p);
-  void fileCreateTempFile(File& f);
+  //void fileCreateTempFile(File& f);
   void fileClose(File& f);
   void fileAppend(File& f, Bytes const& s);
 }
-
-/*
-// We need temp file support for this and other output options. Must fileClose before sending, but closing must not delete, dtor should do that.
-namespace btobexpush
-{
-  void btObexPushFile(Path const& f);
-}
-*/
 
 #endif /* __abstract_hpp__ */
