@@ -31,8 +31,6 @@
   // Can load any pure Lua routines from a file.
   // (Packaging and deployment are a hassle then, though.)
   int err = luaL_loadfile(L, filename); // 0 on success
-  // Afterwards can use lua_getfield to get a function from globals,
-  // and then use lua_pcall to call the appropriate function.
 */
 
 #ifdef __cplusplus

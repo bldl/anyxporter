@@ -8,6 +8,7 @@ namespace engine
 {
   void exportData() {
     auto L = my_lua_newstate_smart();
+    filesys::luaLoadFormatter(L);
     datasrc::Db db;
     datasrc::open(db);
     datasrc::Iter iter;
@@ -23,7 +24,8 @@ namespace engine
       datasrc::next(iter, e);
       std::cout << "read entry" << std::endl;
       datasrc::entryToLua(e, L);
-      filesys::Bytes b = std::string(); // xxx
+      filesys::Bytes b;
+      filesys::luaToBytes(L, b);
       filesys::fileAppend(file, b);
     }
   }

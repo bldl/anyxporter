@@ -27,6 +27,8 @@ namespace datasrc
 
 namespace filesys
 {
+  void luaLoadFormatter(LuaState& st);
+  void luaToBytes(LuaState& st, Bytes& s);
   void fileOpenTruncate(File& f, Path const& p);
   void fileCreateTempFile(File& f);
   void fileClose(File& f);
