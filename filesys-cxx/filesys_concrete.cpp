@@ -39,6 +39,9 @@ namespace filesys
     if (lua_isnil(L, -1))
       throw std::runtime_error
       ("'entry_to_string' undefined");
+    if (!lua_isfunction(L, -1))
+      throw std::runtime_error
+      ("'entry_to_string' must be a function");
     lua_insert(L, -2); // swap
     lua_call(L, 1, 1); // require exactly one result
     if (!lua_isstring(L, -1))
