@@ -18,6 +18,9 @@ CONFIG   += console
 # whether to bundle executable (affects Mac OS X only)
 CONFIG   -= app_bundle
 
+CONFIG += link_pkgconfig
+PKGCONFIG += lua5.1
+
 WITH_QT_MOBILITY {
   CONFIG   += mobility
   MOBILITY = contacts

@@ -27,7 +27,7 @@ namespace datasrc
 
   // Data source and entry format tend to be coupled,
   // so we have this as part of the concept.
-  void entryToLua(Entry const& e, LuaState& st);
+  void entryToLua(Db const& db, Entry const& e, LuaState& st);
 }
 
 namespace filesys

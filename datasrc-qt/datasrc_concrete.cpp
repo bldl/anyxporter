@@ -2,14 +2,21 @@
 
 #include "my_nullptr.hpp"
 
+#include <QDebug>
 #include <assert.h>
 
+// Qt Mobility based data source.
 namespace datasrc
 {
 
   void open(Db& db) {
     db = std::move(unique_ptr<QContactManager>
 		   (new QContactManager(nullptr)));
+    #ifndef QT_NO_DEBUG
+    // informative to view 'x' in debugger
+    auto x = db->detailDefinitions();
+    //qDebug() << x;
+    #endif
   }
 
   void close(Db& db) {
@@ -35,20 +42,26 @@ namespace datasrc
   }
 
   void next(Iter& iter, Entry& h) {
-    iter.nextIx += 1;
     const QContactLocalId& id = iter.lst[iter.nextIx];
     h = iter.db->contact(id);
+    iter.nextIx += 1;
   }
 
-  void entryToLua(Entry const& e, LuaState& st) {
+  void entryToLua(Db const& db, Entry const& e, LuaState& st) {
     lua_State* const L = st.get();
-    lua_createtable(L, 2, 0);
-    /*
-    lua_pushstring(L, e.lastName);
-    lua_setfield(L, -2, "last_name");
-    lua_pushstring(L, e.firstName);
-    lua_setfield(L, -2, "first_name");
-    */
+    QMap<QString, QContactDetailDefinition> defs = db->detailDefinitions();
+    lua_createtable(L, 0, defs.size());
+    QMap<QString, QContactDetailDefinition>::const_iterator it = 
+      defs.constBegin();
+    while (it != defs.constEnd()) {
+      QByteArray asciiKey = it.key().toAscii();
+      char const* const key = asciiKey.data();
+      QByteArray uniValue = it.key().toUtf8(); //xxx want value actually
+      char const* const value = uniValue.data();
+      lua_pushstring(L, value);
+      lua_setfield(L, -2, key);
+      ++it;
+    }
   }
 
 }

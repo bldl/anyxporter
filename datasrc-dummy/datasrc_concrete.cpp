@@ -18,7 +18,7 @@ namespace datasrc
     assert(false && "iteration past end");
   }
 
-  void entryToLua(Entry const& e, LuaState& st) {
+  void entryToLua(Db const& /*db*/, Entry const& e, LuaState& st) {
     lua_State* const L = st.get();
     lua_createtable(L, 0, 0);
   }

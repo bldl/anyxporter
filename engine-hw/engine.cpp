@@ -27,7 +27,7 @@ namespace engine
       datasrc::Entry e;
       datasrc::next(iter, e);
       //std::cout << "read entry" << std::endl;
-      datasrc::entryToLua(e, L);
+      datasrc::entryToLua(db, e, L);
       filesys::luaEntryToBytes(L, b);
       filesys::fileAppend(file, b);
     }
