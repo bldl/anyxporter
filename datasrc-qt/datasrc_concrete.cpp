@@ -54,28 +54,39 @@ namespace datasrc
     lua_State* const L = st.get();
     QList<QContactDetail> ds = e.details();
     lua_createtable(L, 0, ds.size());
+    int dlix = 1; // syntax does not allow this, too, in 'for' init
     for (QList<QContactDetail>::const_iterator dit = ds.constBegin(); 
-	 dit != ds.constEnd(); ++dit) {
+	 dit != ds.constEnd(); ++dit, ++dlix) {
       QContactDetail const& d = *dit;
       if (d.isEmpty())
 	continue;
-      QMap<QString, QVariant> const vm = d.variantValues();
-      lua_createtable(L, 0, vm.size());
-      for (QMap<QString, QVariant>::const_iterator vit = vm.constBegin();
-	   vit != vm.constEnd(); ++vit) {
-	QString vn = vit.key(); // always in Latin1 range
-	QVariant vv = vit.value();
-	if (vv.canConvert<QString>()) {
-	  QString const s = vv.toString();
-	  lua_pushstring(L, s.toUtf8().data());
-	  lua_setfield(L, -2, vn.toUtf8().data());
-	} else {
-	  throw std::runtime_error
-	    (std::string("Unsupported type: ") + vv.typeName());
+      { // QMap -> table, and push
+	QMap<QString, QVariant> const vm = d.variantValues();
+	lua_createtable(L, 0, vm.size());
+	for (QMap<QString, QVariant>::const_iterator vit = 
+	       vm.constBegin();
+	     vit != vm.constEnd(); ++vit) {
+	  QString vn = vit.key(); // always in Latin1 range
+	  QVariant vv = vit.value();
+	  if (vv.canConvert<QString>()) {
+	    QString const s = vv.toString();
+	    lua_pushstring(L, s.toUtf8().data());
+	    lua_setfield(L, -2, vn.toUtf8().data());
+	  } else {
+	    throw std::runtime_error
+	      (std::string("Unsupported type: ") + vv.typeName());
+	  }
 	}
+	QString const dn = d.definitionName();
+	lua_pushstring(L, dn.toUtf8().data());
+	lua_setfield(L, -2, "DefinitionName");
+	// Could store contexts, too, if had any.
+	if (!d.contexts().isEmpty())
+	    throw std::runtime_error
+	      ("contact details contexts unsupported");
+	//qDebug() << d.contexts(); // none in Qt Simulator mock data
       }
-      QString const dn = d.definitionName();
-      lua_setfield(L, -2, dn.toUtf8().data());
+      lua_rawseti(L, -2, dlix);
     }
 #elif 0
     // Shows entry definition names, not actual data.

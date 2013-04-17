@@ -7,6 +7,7 @@ namespace luastate
     // Let us explicitly swap.
     // (Recent versions are okay with assign, too, realizing it
     // is a move.)
-    st.swap(my_lua_newstate_smart());
+    st = std::move(my_lua_newstate_smart());
+    //st.swap(my_lua_newstate_smart());
   }
 }
