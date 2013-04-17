@@ -39,6 +39,9 @@ end
 
 local function details_to_string (ds)
   local s = ""
+  table.sort(ds, function (x, y)
+		   return x["DefinitionName"] < y["DefinitionName"]
+		 end)
   for k, v in ipairs(ds) do
     s = s .. [[<ContactDetail>]] .. 
       datum_to_string(v) .. [[</ContactDetail>]]
