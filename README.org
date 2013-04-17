@@ -1,0 +1,49 @@
+ExporTemplApp (Exporter Template Application)
+
+The idea is that this software can be configured to export different
+kinds of data, probably typically PIM data from mobile devices. And
+that there can be a choice of different export formats, specified in
+an end-user customizable manner (as a Lua script). And that one can
+build different exporter applications from this codebase, and package
+them up as applications of different (hopefully descriptive) names.
+
+This, then, is sort of a template for exporter apps; just go fill in
+the details of your exporter app, and perhaps implement your own data
+source backend and your own output formatter script.
+
+Currently only contact data is supported, and only using the Qt
+Mobility Contacts API. Not all conceivable data available through the
+API can be exported, but the philosophy is to error out if anything
+unexportable is encountered, after which more code needs adding to
+handle that type of data. And only XML export of contacts data is
+currently supported. And only saving as a file on a local filesystem
+is supported, although we hope to add other options (perhaps HTTP
+POST, or Bluetooth OBEX Push).
+
+There is currently no GUI implemented, so your target better have a
+console of some sort so that you can run the program and see any
+possible error output.
+
+* Building and Running
+
+  Run the configure script, specifying your chosen variant, e.g.
+
+  ./configure.sh variants/cxx-mock.var.rkt
+
+  and then
+
+  make test
+
+  provided that building and execution can be done natively for the
+  configuration. This is not the case for the Qt Simulator build, for
+  example, so for that
+
+  ./configure.sh qt-simulator-console.var.rkt
+  make
+
+  to produce a prodect configuration for Qt Creator, and then do
+  building and running under the IDE.
+
+  If the output formatter script is specified as a relative path, make
+  sure to check the working directory of any IDE run configuration.
+

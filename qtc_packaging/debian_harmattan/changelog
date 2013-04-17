@@ -1,5 +1,5 @@
 exportemplapp (0.0.1) unstable; urgency=low
 
-  * Initial Release.
+  * Use Qt Creator wizard. A non-release.
 
- -- Tero Hasu <tero.hasu@hut.fi>  Fri, 12 Apr 2013 11:21:27 +0200
+ -- Tero Hasu <tero.hasu@ii.uib.no>  Fri, 12 Apr 2013 11:21:27 +0200
