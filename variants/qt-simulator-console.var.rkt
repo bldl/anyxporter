@@ -28,6 +28,9 @@ apparently.
     (define/override (with-qt-mobility.attr)
       #t)
   
+    (define/override (lua-export-script.attr)
+      "qt_contact_to_xml.lua")
+
     (define/override (srcdirs.attr)
       (append (super srcdirs.attr)
               (list "ui-qtconsole"

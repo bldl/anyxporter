@@ -79,6 +79,14 @@ project must implement.
   (define/public (feature-debugging.attr)
     #f)
 
+  ;; runtime...
+
+  (define/public (lua-script-path.attr)
+    "lua-src/")
+
+  (define/public (lua-export-script.attr)
+    "contact_to_xml.lua")
+
   ;; build...
   
   (define/public (srcdirs.attr)

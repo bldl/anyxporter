@@ -24,7 +24,7 @@ CFLAGS := -Wall $(LUA_CFLAGS)
 CXXFLAGS := $(CFLAGS) -std=c++0x
 LDFLAGS := $(LUA_LDFLAGS)
 SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS)))
-HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS)))
+HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS))) $(wildcard $(patsubst %, %/*.h, $(SRCDIRS)))
 OBJFILES := $(patsubst %.cpp, %.o, $(SRCFILES))
 GENFILES := 
 

@@ -1,5 +1,7 @@
 #include "abstract.hpp"
 
+#include "current_config.hrh"
+
 #include <stdexcept>
 
 #include <assert.h>
@@ -22,7 +24,7 @@ namespace filesys
 
   void luaLoadFormatter(LuaState& st) {
     lua_State* const L = st.get();
-    int err = luaL_loadfile(L, "lua-src/contact_to_xml.lua");
+    int err = luaL_loadfile(L, LUA_SCRIPT_PATH LUA_EXPORT_SCRIPT);
     if (err) {
       char const* const cs = lua_tostring(L, -1);
       std::string errString(cs);

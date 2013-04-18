@@ -101,17 +101,19 @@
    "__"
    (string-downcase
     (regexp-replace* path-censor-re (path->string (path-basename p)) "_"))
-   "__"))
+   "__"
+   ))
 
 (define ident-censor-re #rx"[-]")
 
 (define* (name-to-c sym)
   (string->symbol
    (string-append
-    "__"
+    ;;"__"
     (string-upcase
      (regexp-replace* ident-censor-re (symbol->string sym) "_"))
-    "__")))
+    ;;"__"
+    )))
 
 (define* (name-to-ruby sym)
   (string->symbol
