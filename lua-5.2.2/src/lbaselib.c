@@ -20,6 +20,9 @@
 #include "lualib.h"
 
 
+#define LOADFILE_SUPPORT 0
+
+
 static int luaB_print (lua_State *L) {
   int n = lua_gettop(L);  /* number of arguments */
   int i;
@@ -259,6 +262,8 @@ static int load_aux (lua_State *L, int status, int envidx) {
 }
 
 
+
+#if LOADFILE_SUPPORT
 static int luaB_loadfile (lua_State *L) {
   const char *fname = luaL_optstring(L, 1, NULL);
   const char *mode = luaL_optstring(L, 2, NULL);
@@ -266,6 +271,8 @@ static int luaB_loadfile (lua_State *L) {
   int status = luaL_loadfilex(L, fname, mode);
   return load_aux(L, status, env);
 }
+#endif
+
 
 
 /*
@@ -328,6 +335,7 @@ static int luaB_load (lua_State *L) {
 /* }====================================================== */
 
 
+#if LOADFILE_SUPPORT
 static int dofilecont (lua_State *L) {
   return lua_gettop(L) - 1;
 }
@@ -341,6 +349,7 @@ static int luaB_dofile (lua_State *L) {
   lua_callk(L, 0, LUA_MULTRET, 0, dofilecont);
   return dofilecont(L);
 }
+#endif
 
 
 static int luaB_assert (lua_State *L) {
@@ -417,11 +426,15 @@ static int luaB_tostring (lua_State *L) {
 static const luaL_Reg base_funcs[] = {
   {"assert", luaB_assert},
   {"collectgarbage", luaB_collectgarbage},
+#if LOADFILE_SUPPORT
   {"dofile", luaB_dofile},
+#endif
   {"error", luaB_error},
   {"getmetatable", luaB_getmetatable},
   {"ipairs", luaB_ipairs},
+#if LOADFILE_SUPPORT
   {"loadfile", luaB_loadfile},
+#endif
   {"load", luaB_load},
 #if defined(LUA_COMPAT_LOADSTRING)
   {"loadstring", luaB_load},
