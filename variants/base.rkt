@@ -87,6 +87,9 @@ project must implement.
   (define/public (lua-export-script.attr)
     "contact_to_xml.lua")
 
+  (define/public (export-output-file.attr)
+    "outfile")
+
   ;; build...
   
   (define/public (srcdirs.attr)

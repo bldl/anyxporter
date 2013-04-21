@@ -84,7 +84,7 @@ qt-simulator-build : qt.mk
 	@echo "NOTE:" use Qt Creator to build for Qt simulator
 
 test : $(PROG)
-	@./$(PROG) && cat outfile
+	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
 clean :
 	-rm $(PROG) $(OBJFILES) qt.mk .depend

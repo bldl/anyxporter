@@ -1,6 +1,7 @@
 #include "engine.hpp"
 
 #include "abstract.hpp"
+#include "current_config.hrh"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ namespace engine
     datasrc::Iter iter;
     datasrc::iterator(db, iter);
     filesys::File file;
-    filesys::Path path = "outfile";
+    filesys::Path path = EXPORT_OUTPUT_FILE;
     filesys::fileOpenTruncate(file, path);
     filesys::Bytes b;
     filesys::luaPreambleToBytes(L, b);
