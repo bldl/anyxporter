@@ -91,6 +91,10 @@ project must implement.
     "outfile")
 
   ;; build...
+
+  ;; 'pkg-config, 'dynamic-lib, 'static-lib, or 'source-code
+  (define/public (lua-link-as.attr)
+    'pkg-config)
   
   (define/public (srcdirs.attr)
     (list "src"

@@ -13,10 +13,15 @@ config-default :
 
 include src/current_config.mk
 
-#LUA_CFLAGS := -I/usr/include/lua5.1
-#LUA_LDFLAGS := -llua5.1
-LUA_CFLAGS := $(shell pkg-config --cflags lua5.1)
-LUA_LDFLAGS := $(shell pkg-config --libs lua5.1)
+ifeq ($(LUA_LINK_AS),pkg-config)
+  LUA_CFLAGS := $(shell pkg-config --cflags lua5.1)
+  LUA_LDFLAGS := $(shell pkg-config --libs lua5.1)
+else ifeq ($(LUA_LINK_AS),dynamic-lib)
+  LUA_CFLAGS := -I/usr/include/lua5.1
+  LUA_LDFLAGS := -llua5.1
+else
+  $(error unsupported Lua linkage)
+endif
 
 PROG := $(APP_BASENAME)
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS))
