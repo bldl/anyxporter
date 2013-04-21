@@ -46,14 +46,21 @@
 ** C++ code, with _longjmp/_setjmp when asked to use them, and with
 ** longjmp/setjmp otherwise.
 */
-#if !defined(LUAI_THROW)
 
-#if defined(__cplusplus) && !defined(LUA_USE_LONGJMP)
 /* C++ exceptions */
 #define LUAI_THROW(L,c)		throw(c)
 #define LUAI_TRY(L,c,a) \
 	try { a } catch(...) { if ((c)->status == 0) (c)->status = -1; }
 #define luai_jmpbuf		int  /* dummy variable */
+
+
+
+#if 0
+#if !defined(LUAI_THROW)
+
+#if defined(__cplusplus) && !defined(LUA_USE_LONGJMP)
+
+// C++
 
 #elif defined(LUA_USE_ULONGJMP)
 /* in Unix, try _longjmp/_setjmp (more efficient) */
@@ -70,6 +77,7 @@
 #endif
 
 #endif
+#endif /* 0 */
 
 
 
