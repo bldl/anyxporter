@@ -48,3 +48,8 @@ IS_HARMATTAN {
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog
 }
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/exportemplapp/bin
+    INSTALLS += target
+}
