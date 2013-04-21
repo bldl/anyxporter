@@ -27,6 +27,9 @@ available.
     (define/override (with-qt-mobility.attr)
       #t)
   
+    (define/override (lua-link-as.attr)
+      'source-code)
+    
     (define/override (lua-script-path.attr)
       "lua-src/") ;; xxx for now, later install path
 
