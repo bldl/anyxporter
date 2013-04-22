@@ -93,14 +93,17 @@ namespace datasrc
 	      (std::string("Unsupported type: ") + vv.typeName());
 	  }
 	}
+	// definitionName
 	QString const dn = d.definitionName();
 	lua_pushstring(L, dn.toUtf8().data());
 	lua_setfield(L, -2, "DefinitionName");
-	// Could store contexts, too, if had any.
-	if (!d.contexts().isEmpty())
-	    throw std::runtime_error
-	      ("contact details contexts unsupported");
-	//qDebug() << d.contexts(); // none in Qt Simulator mock data
+	// contexts
+	QStringList const ctxLst = d.contexts();
+	if (!ctxLst.isEmpty()) {
+	  //qDebug() << ctxLst; // none in Qt Simulator mock data
+	  pushStringList(L, ctxLst);
+	  lua_setfield(L, -2, "Contexts");
+	}
       }
       lua_rawseti(L, -2, dlix);
     }
