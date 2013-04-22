@@ -1,5 +1,5 @@
 * DONE Qt Simulator port
-* TODO Harmattan port
+* DONE Harmattan port
 * Symbian port?
 * BlackBerry 10 port?
 * Sailfish port?
