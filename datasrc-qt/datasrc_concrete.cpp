@@ -49,11 +49,23 @@ namespace datasrc
     iter.nextIx += 1;
   }
 
+  static void pushStringList(lua_State* const L, QStringList const& ss)
+  {
+    lua_createtable(L, ss.size(), 0);
+    int slix = 1;
+    for (QList<QString>::const_iterator sit = ss.constBegin();
+	 sit != ss.constEnd(); ++sit, ++slix) {
+      QString const& s = *sit;
+      lua_pushstring(L, s.toUtf8().data());
+      lua_rawseti(L, -2, slix);
+    }
+  }
+
   void entryToLua(Db const& /*db*/, Entry const& e, LuaState& st) {
 #if 1
     lua_State* const L = st.get();
     QList<QContactDetail> ds = e.details();
-    lua_createtable(L, 0, ds.size());
+    lua_createtable(L, ds.size(), 0);
     int dlix = 1; // syntax does not allow this, too, in 'for' init
     for (QList<QContactDetail>::const_iterator dit = ds.constBegin(); 
 	 dit != ds.constEnd(); ++dit, ++dlix) {
@@ -71,6 +83,10 @@ namespace datasrc
 	  if (vv.canConvert<QString>()) {
 	    QString const s = vv.toString();
 	    lua_pushstring(L, s.toUtf8().data());
+	    lua_setfield(L, -2, vn.toUtf8().data());
+	  } else if (vv.canConvert<QStringList>()) {
+	    QStringList const ss = vv.toStringList();
+	    pushStringList(L, ss); // as new array of string
 	    lua_setfield(L, -2, vn.toUtf8().data());
 	  } else {
 	    throw std::runtime_error
