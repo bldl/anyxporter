@@ -12,10 +12,6 @@
 #define ldo_c
 #define LUA_CORE
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "lua.h"
 
 #include "lapi.h"
@@ -34,10 +30,6 @@ extern "C" {
 #include "lundump.h"
 #include "lvm.h"
 #include "lzio.h"
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
 
 /*
 ** {======================================================

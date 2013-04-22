@@ -133,6 +133,13 @@
 #define LUA_ENV		"_ENV"
 
 
+/* We wish to allow some things being defined in C and some in C++. */
+#if defined(__cplusplus)
+#define LUA_EXTERN_C    extern "C"
+#else
+#define LUA_EXTERN_C    /* empty */
+#endif
+
 /*
 @@ LUA_API is a mark for all core API functions.
 @@ LUALIB_API is a mark for all auxiliary library functions.
@@ -142,6 +149,9 @@
 ** the libraries, you may want to use the following definition (define
 ** LUA_BUILD_AS_DLL to get it).
 */
+#define LUA_API		LUA_EXTERN_C
+
+#if 0
 #if defined(LUA_BUILD_AS_DLL)	/* { */
 
 #if defined(LUA_CORE) || defined(LUA_LIB)	/* { */
@@ -155,6 +165,7 @@
 #define LUA_API		extern
 
 #endif				/* } */
+#endif /* 0 */
 
 
 /* more often than not the libs go together with the core */
@@ -176,6 +187,11 @@
 ** give a warning about it. To avoid these warnings, change to the
 ** default definition.
 */
+#define LUAI_FUNC	LUA_EXTERN_C
+#define LUAI_DDEC	LUA_EXTERN_C
+#define LUAI_DDEF	LUA_EXTERN_C
+
+#if 0
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
     defined(__ELF__)		/* { */
 #define LUAI_FUNC	__attribute__((visibility("hidden"))) extern
@@ -187,6 +203,7 @@
 #define LUAI_DDEC	extern
 #define LUAI_DDEF	/* empty */
 #endif				/* } */
+#endif /* 0 */
 
 
 
