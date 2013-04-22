@@ -58,6 +58,8 @@ config :
 ifeq ($(WITH_QMAKE),true)
   ifeq ($(IS_QT_SIMULATOR),true)
     BUILD_RULE := qt-simulator-build
+  else ifeq ($(IS_HARMATTAN),true)
+    BUILD_RULE := qt-harmattan-build
   else
     BUILD_RULE := qt-build
   endif
@@ -101,6 +103,9 @@ qt-build : qt.mk
 
 qt-simulator-build : qt.mk
 	@echo "NOTE:" use Qt Creator to build for Qt simulator
+
+qt-harmattan-build : qt.mk
+	@echo "NOTE:" use Qt Creator to build for MeeGo Harmattan
 
 test : $(PROG)
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)

@@ -95,6 +95,12 @@ project must implement.
   ;; 'pkg-config, 'dynamic-lib, 'static-lib, or 'source-code
   (define/public (lua-link-as.attr)
     'pkg-config)
+
+  (define/public (lua-link-as-pkg-config.attr)
+    (eq? (lua-link-as.attr) 'pkg-config))
+  
+  (define/public (lua-link-as-source-code.attr)
+    (eq? (lua-link-as.attr) 'source-code))
   
   (define/public (srcdirs.attr)
     (list "src"
