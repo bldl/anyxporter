@@ -31,17 +31,19 @@ else ifeq ($(LUA_LINK_AS),source-code)
 else
   $(error unsupported Lua linkage)
 endif
+LUA_SRCFILES = $(LUA_C_SRCFILES) $(LUA_CXX_SRCFILES)
 
 PROG := $(APP_BASENAME)
 DEPFLAGS := $(patsubst %, -I% ,$(SRCDIRS)) $(LUA_CFLAGS)
 CFLAGS := -Wall $(DEPFLAGS)
 CXXFLAGS := $(CFLAGS) -std=c++0x
 LDFLAGS := $(LUA_LDFLAGS)
+CORE_SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS)))
+CORE_HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS))) $(wildcard $(patsubst %, %/*.h, $(SRCDIRS)))
 C_SRCFILES := $(LUA_C_SRCFILES)
-CXX_SRCFILES := $(wildcard $(patsubst %, %/*.cpp, $(SRCDIRS))) $(LUA_CXX_SRCFILES)
+CXX_SRCFILES :=  $(CORE_SRCFILES) $(LUA_CXX_SRCFILES)
 SRCFILES := $(C_SRCFILES) $(CXX_SRCFILES)
 OBJFILES := $(patsubst %.cpp, %.o, $(CXX_SRCFILES)) $(patsubst %.c, %.o, $(C_SRCFILES))
-HDRFILES := $(wildcard $(patsubst %, %/*.hpp, $(SRCDIRS))) $(wildcard $(patsubst %, %/*.h, $(SRCDIRS)))
 GENFILES := 
 
 -include local.mk
@@ -87,8 +89,8 @@ $(PROG) : $(OBJFILES)
 	gcc -c $(CFLAGS) -o $@ $<
 
 define do-qmake
-	echo 'SOURCES +=' $(foreach x, $(SRCFILES), $(shell basename $(x))) > src/source_list.pri
-	echo 'HEADERS +=' $(foreach x, $(HDRFILES), $(shell basename $(x))) >> src/source_list.pri
+	echo 'SOURCES +=' $(foreach x, $(CORE_SRCFILES), $(shell basename $(x))) > src/source_list.pri
+	echo 'HEADERS +=' $(foreach x, $(CORE_HDRFILES), $(shell basename $(x))) >> src/source_list.pri
 	qmake -o qt.mk
 endef
 
@@ -107,11 +109,11 @@ qt-simulator-build : qt.mk
 qt-harmattan-build : qt.mk
 	@echo "NOTE:" use Qt Creator to build for MeeGo Harmattan
 
-test : $(PROG)
+test : build
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
 clean :
-	-rm $(PROG) $(OBJFILES) qt.mk .depend
+	-rm $(PROG) $(OBJFILES) *.o qt.mk .depend
 
 install :
 	sudo aptitude install liblua5.1-0 liblua5.1-0-dev
