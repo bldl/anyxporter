@@ -141,8 +141,19 @@
 (define (bool-attr? attr)
   (boolean? (second attr)))
 
+(define (true-attr? attr)
+  (eqv? #t (second attr)))
+
 ;; Returns a list of symbols.
-(define (bool-attrs-to-gmake-list attrs)
+(define (bool-attrs-to-qmake-list attrs)
+  (map
+   (lambda (entry)
+     (let ((name (first entry)))
+       (name-to-gmake name)))
+   (filter true-attr? attrs)))
+
+;; Returns a list of symbols.
+(define (bool-attrs-to-qmake-list/with-negates attrs)
   (map
    (lambda (entry)
      (let ((name (first entry))
@@ -266,10 +277,12 @@
     (void))
    ((eqv? value #t)
     (begin (disp-nl "~a = true" name)
-           (disp-nl "NOT__~a =" name)))
+           ;;(disp-nl "NOT__~a =" name)
+           ))
    ((eqv? value #f)
     (begin (disp-nl "~a =" name)
-           (disp-nl "NOT__~a = true" name)))
+           ;;(disp-nl "NOT__~a = true" name)
+           ))
    ((hexnum? value)
     (begin
       (disp-nl "~a__DEC = ~s" name (hexnum-num value))
@@ -349,7 +362,7 @@
       (begin
         (display "CONFIG += ")
         (for-each-sep display (thunk (display " "))
-                      (bool-attrs-to-gmake-list attrs))
+                      (bool-attrs-to-qmake-list attrs))
         (newline))
       ))))
 
