@@ -31,7 +31,7 @@ available.
       'source-code)
     
     (define/override (lua-script-path.attr)
-      "lua-src/") ;; xxx for now, later install path
+      "/opt/exportemplapp/scripts/")
 
     (define/override (lua-export-script.attr)
       "qt_contact_to_xml.lua")

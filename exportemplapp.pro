@@ -58,6 +58,10 @@ IS_HARMATTAN {
 }
 
 contains(MEEGO_EDITION,harmattan) {
-    target.path = /opt/exportemplapp/bin
-    INSTALLS += target
+  target.path = /opt/exportemplapp/bin
+  INSTALLS += target
+
+  scripts.files = $$PWD/lua-src/*.lua
+  scripts.path = /opt/exportemplapp/scripts
+  INSTALLS += scripts
 }
