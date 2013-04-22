@@ -135,8 +135,10 @@
 
 /* We wish to allow some things being defined in C and some in C++. */
 #if defined(__cplusplus)
+#define LUA_EXTERN_V    extern "C"
 #define LUA_EXTERN_C    extern "C"
 #else
+#define LUA_EXTERN_V    extern
 #define LUA_EXTERN_C    /* empty */
 #endif
 
@@ -188,8 +190,8 @@
 ** default definition.
 */
 #define LUAI_FUNC	LUA_EXTERN_C
-#define LUAI_DDEC	LUA_EXTERN_C
-#define LUAI_DDEF	LUA_EXTERN_C
+#define LUAI_DDEC	LUA_EXTERN_V
+#define LUAI_DDEF	/* empty */
 
 #if 0
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
