@@ -54,6 +54,17 @@ project must implement.
   (define/public (is-qt-simulator.attr)
     (eq? (platform) 'qt-simulator))
   
+  ;; features...
+  
+  (define/public (feature-gui.attr)
+    #f)
+
+  (define/public (feature-debugging.attr)
+    #f)
+
+  (define/public (feature-http-post.attr)
+    #f)
+
   ;; tools and libraries...
   
   (define/public (with-qt.attr)
@@ -62,6 +73,9 @@ project must implement.
   (define/public (with-qt-mobility.attr)
     #f)
 
+  (define/public (with-qt-network.attr)
+    (feature-http-post.attr))
+  
   (define/public (with-qmake.attr)
     (with-qt.attr))
 
@@ -69,14 +83,6 @@ project must implement.
     (not (with-qmake.attr)))
 
   (define/public (with-magnolia.attr)
-    #f)
-
-  ;; features...
-  
-  (define/public (feature-gui.attr)
-    #f)
-
-  (define/public (feature-debugging.attr)
     #f)
 
   ;; runtime...
@@ -105,7 +111,9 @@ project must implement.
   (define/public (srcdirs.attr)
     (list "src"
           (if (with-magnolia.attr) "engine-mg" "engine-hw")
-          "filesys-cxx"))
+          "filesys-cxx"
+          (if (feature-http-post.attr) "httppost-qt" "httppost-dummy")
+          ))
   
   ) ;; end project-variant%
 

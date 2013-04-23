@@ -1,11 +1,6 @@
 #ifndef __abstract_hpp__
 #define __abstract_hpp__
 
-/* Implementation specific. 
-   Must define concrete datatypes.
-*/
-#include "datasrc_concrete.hpp"
-#include "filesys_concrete.hpp"
 #include "my_lua.h"
 
 namespace luastate
@@ -14,6 +9,8 @@ namespace luastate
 
   void init(LuaState& st);
 }
+
+#include "datasrc_concrete.hpp"
 
 namespace datasrc
 {
@@ -30,6 +27,8 @@ namespace datasrc
   void entryToLua(Db const& db, Entry const& e, LuaState& st);
 }
 
+#include "filesys_concrete.hpp"
+
 namespace filesys
 {
   typedef luastate::LuaState LuaState;
@@ -42,6 +41,13 @@ namespace filesys
   //void fileCreateTempFile(File& f);
   void fileClose(File& f);
   void fileAppend(File& f, Bytes const& s);
+}
+
+#include "httppost_concrete.hpp"
+
+namespace httppost
+{
+  void uploadFile(Path const& p);
 }
 
 #endif /* __abstract_hpp__ */

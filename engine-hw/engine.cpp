@@ -34,6 +34,7 @@ namespace engine
     }
     filesys::luaPostambleToBytes(L, b);
     filesys::fileAppend(file, b);
+    filesys::fileClose(file);
+    httppost::uploadFile(path);
   }
 } // end namespace engine
-

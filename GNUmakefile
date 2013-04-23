@@ -113,7 +113,7 @@ test : build
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
 clean :
-	-rm $(PROG) $(OBJFILES) *.o qt.mk .depend
+	-rm $(PROG) $(OBJFILES) *.o moc_*.cpp qt.mk .depend
 
 install :
 	sudo aptitude install liblua5.1-0 liblua5.1-0-dev

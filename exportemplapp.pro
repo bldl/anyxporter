@@ -12,6 +12,10 @@ QT       += core
   QT -= gui
 }
 
+WITH_QT_NETWORK {
+  QT += network
+}
+
 # setting for qDebug() (affects Win32 only)
 CONFIG   += console
 
