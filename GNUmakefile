@@ -112,6 +112,9 @@ qt-harmattan-build : qt.mk
 test : build
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
+test-post : build
+	@DO_HTTP_POST=true ./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
+
 clean :
 	-rm $(PROG) $(OBJFILES) *.o moc_*.cpp qt.mk .depend
 

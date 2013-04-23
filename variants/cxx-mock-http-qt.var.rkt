@@ -29,10 +29,11 @@ This variant is handy for testing uploading on the PC.
     (define/override (lua-export-script.attr)
       "contact_to_xml.lua")
 
-    (define/override (srcdirs.attr)
-      (append (super srcdirs.attr)
-              (list "ui-qtconsole"
-                    "datasrc-mock")))
+    (define/override (component-datasrc.attr)
+      'datasrc-mock)
+
+    (define/override (component-ui.attr)
+      'ui-qtconsole)
     
     )) ;; end class
 

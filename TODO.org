@@ -1,5 +1,6 @@
 * DONE Qt Simulator port
 * DONE Harmattan port
+* HTTP POSTing should be made to handle posting errors cleanly
 * Symbian port?
 * BlackBerry 10 port?
 * Sailfish port?

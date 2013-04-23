@@ -96,6 +96,23 @@ project must implement.
   (define/public (export-output-file.attr)
     "outfile")
 
+  ;; components...
+
+  (define/public (component-datasrc.attr)
+    'datasrc-dummy)
+  
+  (define/public (component-engine.attr)
+    (if (with-magnolia.attr) 'engine-mg 'engine-hw))
+
+  (define/public (component-filesys.attr)
+    'filesys-cxx)
+  
+  (define/public (component-httppost.attr)
+    (if (feature-http-post.attr) 'httppost-qt 'httppost-dummy))
+
+  (define/public (component-ui.attr)
+    (if (with-qt.attr) 'ui-qtconsole 'ui-console))
+
   ;; build...
 
   ;; 'pkg-config, 'dynamic-lib, 'static-lib, or 'source-code
@@ -109,11 +126,17 @@ project must implement.
     (eq? (lua-link-as.attr) 'source-code))
   
   (define/public (srcdirs.attr)
-    (list "src"
-          (if (with-magnolia.attr) "engine-mg" "engine-hw")
-          "filesys-cxx"
-          (if (feature-http-post.attr) "httppost-qt" "httppost-dummy")
-          ))
+    (cons "src"
+          (map
+           symbol->string
+           (filter identity
+                   (list
+                    (component-datasrc.attr)
+                    (component-engine.attr)
+                    (component-filesys.attr)
+                    (component-httppost.attr)
+                    (component-ui.attr)
+                    )))))
   
   ) ;; end project-variant%
 

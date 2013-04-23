@@ -16,10 +16,11 @@ to export data.
     project-variant%
     (super-new)
     
-    (define/override (srcdirs.attr)
-      (append (super srcdirs.attr)
-              (list "ui-console"
-                    "datasrc-mock")))
+    (define/override (component-datasrc.attr)
+      'datasrc-mock)
+
+    (define/override (component-ui.attr)
+      'ui-console)
     
     )) ;; end class
 

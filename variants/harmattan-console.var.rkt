@@ -36,10 +36,11 @@ available.
     (define/override (lua-export-script.attr)
       "qt_contact_to_xml.lua")
 
-    (define/override (srcdirs.attr)
-      (append (super srcdirs.attr)
-              (list "ui-qtconsole"
-                    "datasrc-qt")))
+    (define/override (component-datasrc.attr)
+      'datasrc-qt)
+
+    (define/override (component-ui.attr)
+      'ui-qtconsole)
     
     )) ;; end class
 

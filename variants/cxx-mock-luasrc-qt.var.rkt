@@ -29,11 +29,12 @@ Mobility is not used.
     (define/override (lua-export-script.attr)
       "contact_to_xml.lua")
 
-    (define/override (srcdirs.attr)
-      (append (super srcdirs.attr)
-              (list "ui-qtconsole"
-                    "datasrc-mock")))
-    
+    (define/override (component-datasrc.attr)
+      'datasrc-mock)
+
+    (define/override (component-ui.attr)
+      'ui-qtconsole)
+
     )) ;; end class
 
 (define* (info)
