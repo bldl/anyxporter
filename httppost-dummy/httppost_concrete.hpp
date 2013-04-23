@@ -7,7 +7,7 @@ namespace httppost
 {
   typedef filesys::Path Path;
 
-  inline void uploadFile(Path const& p) {}
+  inline void uploadFile(Path const&) {}
 }
 
 #endif /* __httppost_concrete_hpp__ */
