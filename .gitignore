@@ -13,3 +13,4 @@ current.var.rkt
 source_list.pri
 *.pro.user
 *.o
+/cxx

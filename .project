@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>ExporTemplApp</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+                <buildCommand>
+                        <name>magnolia_eclipse.magnolia.builder</name>
+                        <arguments>
+                        </arguments>
+                </buildCommand>
+	</buildSpec>
+	<natures>
+                <nature>magnolia_eclipse.magnolia.nature</nature>
+	</natures>
+</projectDescription>
