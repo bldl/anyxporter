@@ -14,3 +14,4 @@ source_list.pri
 *.pro.user
 *.o
 /cxx
+outfile

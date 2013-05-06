@@ -1,0 +1,5 @@
+#! /bin/sh
+
+g++ --std=c++11 $(pkg-config --cflags lua5.1) -I httppost-dummy/ -I datasrc-mock/ -I filesys-cxx/ -Icxx cxx/engine/Engine/Engine.cxx  cxx/abstract.o cxx/my_lua.o filesys-cxx/filesys_concrete.o datasrc-mock/datasrc_concrete.o -o cxx/engine/Engine/Engine $(pkg-config --libs lua5.1)
+
+[ "$1" = "check" ] && cxx/engine/Engine/Engine test "FileSys()" >/dev/null && cat outfile && echo
