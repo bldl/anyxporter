@@ -12,13 +12,11 @@ concept ExportEngine = {
 	procedure exportData(upd sys : System);
 };
 
-
-
-program Engine = {
-	use CxxFileSys;
+implementation Engine = {
+	require FileSys;
 	use CurrentConfig;
-	use CxxLuaState;
-	use MockDataSourceMapper[map => mapDataSource, Data1 => File, Data2 => LuaState, f => exportEntry];
+	require LuaState;
+	require DataSourceMapper[map => mapDataSource, Data1 => File, Data2 => LuaState, f => exportEntry];
 	
 	procedure test(upd fileSys : FileSys) {
 		var st = luaState();
@@ -47,3 +45,9 @@ program Engine = {
 	}
 };
 
+program CxxEngine = {
+	use Engine;
+	use CxxFileSys;
+	use CxxLuaState;
+	use MockDataSourceMapper[map => mapDataSource, Data1 => File, Data2 => LuaState, f => exportEntry];
+};

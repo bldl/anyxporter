@@ -1,10 +1,7 @@
 package filesys.FileSys
 	imports lua.LuaState, filesys.Bytes, filesys.Path, config.CurrentConfig;
 
-/*
-concept FileSys = {
-	use LuaState;
-		
+concept FileSys = {		
 	type Path;
 	type FileSys;
 	type File;
@@ -14,16 +11,15 @@ concept FileSys = {
 	procedure fileClose(upd file : File, upd fileSys : FileSys);
 	procedure fileAppend(upd file: File, obs s : Bytes);
 };
-*/
+
 
 implementation CxxFileSys = external C++ filesys.CxxFileSys {
-	extend CxxLuaState;
 	extend CxxPath;
+	extend CxxBytes;
 	
 	type Path;
 	type FileSys;
 	type File;
-	type Bytes;
 		
 	procedure fileOpenTruncate(obs path : Path, upd fileSys : FileSys, out file : File);
 	procedure fileClose(upd file : File, upd fileSys : FileSys);

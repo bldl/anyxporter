@@ -1,6 +1,6 @@
 package lua.LuaState
 	imports filesys.Bytes;
-/*
+
 concept LuaState = {
 	type LuaState;
 	type Bytes;
@@ -11,7 +11,7 @@ concept LuaState = {
 	procedure luaPostambleToBytes(upd st : LuaState, out s : Bytes);
 	procedure luaEntryToBytes(upd st : LuaState, out s : Bytes);	
 };
-*/
+
 implementation CxxLuaState = external C++ lua.CxxLuaState {
 	extend CxxBytes;
 	

@@ -2,13 +2,15 @@ package datasrc.DataSource
 	imports lua.LuaState;
 
 concept DataSourceMapper = {
+	use LuaState;
 	type Entry;
 	type Data1;
 	type Data2;
 	
-	procedure map() guard isAccessible();
+	procedure map(upd d1 : Data1, upd d2 : Data2) guard isAccessible();
 	procedure f(obs e : Entry, upd d1 : Data1, upd d2 : Data2);
 	predicate isAccessible();
+	procedure entryToLua(obs e : Entry, upd st : LuaState);
 };
 
 
