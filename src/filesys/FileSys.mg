@@ -1,5 +1,10 @@
 package filesys.FileSys
-	imports lua.LuaState, filesys.Bytes, filesys.Path, config.CurrentConfig;
+	imports 
+		lua.LuaState, 
+		filesys.Bytes, filesys.Path,
+		permissions.Permissions,
+		config.CurrentConfig
+		;
 
 concept FileSys = {		
 	type Path;
@@ -12,20 +17,34 @@ concept FileSys = {
 	procedure fileAppend(upd file: File, obs s : Bytes);
 };
 
-
-implementation CxxFileSys = external C++ filesys.CxxFileSys {
-	extend CxxPath;
-	extend CxxBytes;
+implementation CxxFileSysPermissions = {
+	use Permissions;
 	
-	type Path;
-	type FileSys;
-	type File;
-		
-	procedure fileOpenTruncate(obs path : Path, upd fileSys : FileSys, out file : File);
-	procedure fileClose(upd file : File, upd fileSys : FileSys);
-	procedure fileAppend(upd file: File, obs s : Bytes);
+	predicate CXX_FILE_CREATE() = Permission;
+	predicate CXX_FILE_WRITE() = Permission;
+	predicate CXX_FILE_READ() = Permission;
+	predicate CXX_FILE_DELETE() = Permission;
 };
 
+
+implementation CxxFileSys = {
+	use CxxFileSysPermissions;
+		
+	external C++ filesys.CxxFileSys {
+		require signature(CxxFileSysPermissions);
+		extend CxxPath;
+		extend CxxBytes;
+		
+		type Path;
+		type FileSys;
+		type File;
+			
+		procedure fileOpenTruncate(obs path : Path, upd fileSys : FileSys, out file : File)
+			alert RequiresPermission pre CXX_FILE_CREATE && CXX_FILE_WRITE  || CXX_FILE_DELETE;
+		procedure fileClose(upd file : File, upd fileSys : FileSys);
+		procedure fileAppend(upd file: File, obs s : Bytes);
+	};
+};
 
 program FileSysTest = {
 	use CxxFileSys;

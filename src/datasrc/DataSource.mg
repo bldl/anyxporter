@@ -1,5 +1,6 @@
 package datasrc.DataSource
-	imports lua.LuaState;
+	imports lua.LuaState,
+		permissions.Permissions;
 
 concept DataSourceMapper = {
 	use LuaState;
@@ -14,17 +15,26 @@ concept DataSourceMapper = {
 };
 
 
-implementation MockDataSourceMapper = external C++ datasrc.MockDataSourceMapper {
-	extend CxxLuaState;
-	require type Data1;
-	require type Data2;
+implementation MockDataSourceMapper = {
+	use Permissions;
+	predicate MOCK_DATA_SOURCE_ACCESS() = Permission;
+	
+	
+	external C++ datasrc.MockDataSourceMapper {
+		require Permissions;
+		require predicate MOCK_DATA_SOURCE_ACCESS();
+		extend CxxLuaState;
+		require type Data1;
+		require type Data2;
+			
+		require procedure f(obs e : Entry, upd d1 : Data1, upd d2 : Data2);	
 		
-	require procedure f(obs e : Entry, upd d1 : Data1, upd d2 : Data2);	
+		type Entry;
+		procedure map(upd d1 : Data1, upd d2 : Data2) 
+			alert RequiresPermission pre MOCK_DATA_SOURCE_ACCESS;
 	
-	type Entry;
-	procedure map(upd d1 : Data1, upd d2 : Data2) guard isAccessible();
-
-	predicate isAccessible();
-	
-	procedure entryToLua(obs e : Entry, upd st : LuaState);
+		predicate isAccessible();
+		
+		procedure entryToLua(obs e : Entry, upd st : LuaState);
+	};
 };
