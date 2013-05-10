@@ -51,4 +51,3 @@ program CxxEngine = {
 	use CxxLuaState;
 	use MockDataSourceMapper[map => mapDataSource, Data1 => File, Data2 => LuaState, f => exportEntry];
 };
-

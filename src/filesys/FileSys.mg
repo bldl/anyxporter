@@ -40,11 +40,13 @@ implementation CxxFileSys = {
 		type File;
 			
 		procedure fileOpenTruncate(obs path : Path, upd fileSys : FileSys, out file : File)
-			alert RequiresPermission pre CXX_FILE_CREATE && CXX_FILE_WRITE  || CXX_FILE_DELETE;
+			alert RequiresPermission unless pre CXX_FILE_CREATE && CXX_FILE_WRITE;
 		procedure fileClose(upd file : File, upd fileSys : FileSys);
 		procedure fileAppend(upd file: File, obs s : Bytes);
 	};
 };
+
+
 
 program FileSysTest = {
 	use CxxFileSys;

@@ -31,7 +31,7 @@ implementation MockDataSourceMapper = {
 		
 		type Entry;
 		procedure map(upd d1 : Data1, upd d2 : Data2) 
-			alert RequiresPermission pre MOCK_DATA_SOURCE_ACCESS;
+			alert RequiresPermission unless pre MOCK_DATA_SOURCE_ACCESS;
 	
 		predicate isAccessible();
 		
