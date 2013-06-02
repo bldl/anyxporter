@@ -141,7 +141,23 @@ do-abld :
 abld-reallyclean :
 	cd $(BUILD_DIR) && $(WITH_GNUPOC) abld reallyclean
 
-sbsv1-build : do-bldmake do-abld
+SIS_BASEFILE := $(APP_BASENAME)-$(VERSION_STRING)-$(VARIANT_NAME).sis
+SIS_FILE := $(BUILD_DIR)/$(SIS_BASEFILE)
+SISX_FILE := $(SIS_FILE)x
+INSTALL_FILE := $(if $(IS_ELF),$(SISX_FILE),$(SIS_FILE))
+
+pkg-file : do-build-dir
+	cat src/module.pkg.in | $(RBFILTER) > $(BUILD_DIR)/$(APP_BASENAME).pkg
+
+do-makesis : pkg-file
+	cd $(BUILD_DIR) && $(WITH_GNUPOC) makesis -d$(shell $(WITH_GNUPOC) printenv EPOCROOT) $(APP_BASENAME).pkg $(SIS_BASEFILE)
+
+do-sign-sis :
+	$(WITH_GNUPOC) signsis -s $(SIS_FILE) $(SISX_FILE) certs/$(CERT_NAME).cer certs/$(CERT_NAME).key my-secret
+
+do-build-sis : do-makesis $(and $(SIGNED), do-sign-sis)
+
+sbsv1-build : do-bldmake do-abld do-build-sis
 
 test : build
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
@@ -152,5 +168,5 @@ test-post : build
 clean :
 	-rm $(PROG) $(OBJFILES) *.o moc_*.cpp qt.mk .depend Makefile
 
-install :
+sys-install :
 	sudo aptitude install liblua5.1-0 liblua5.1-0-dev

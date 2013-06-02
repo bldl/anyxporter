@@ -203,8 +203,8 @@ project must implement.
   (define/public (cert-name.attr)
     "app-self")
   
-  (define/public (capabilities.attr)
-    '(ReadUserData)) ;;  WriteUserData))
+  (define/public (capabilities.attr) '())
+  ;;'(ReadUserData WriteUserData)
   
   ;; tools and libraries...
   

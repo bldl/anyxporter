@@ -49,9 +49,9 @@
 
 "epoc32/release/<%= $ABLD_ARCHITECTURE %>/<%= $ABLD_VARIANT %>/<%= $UNIQUE_BASENAME %>.exe" - "!:\sys\bin\<%= $UNIQUE_BASENAME %>.exe"
 
-//"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>.rsc" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>.rsc"
-//"epoc32/data/z/private/10003a3f/import/apps/<%= $UNIQUE_BASENAME %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= $UNIQUE_BASENAME %>_reg.rsc"
-//"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>_aif.mif" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>_aif.mif"
+;;"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>.rsc" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>.rsc"
+;;"epoc32/data/z/private/10003a3f/import/apps/<%= $UNIQUE_BASENAME %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= $UNIQUE_BASENAME %>_reg.rsc"
+;;"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>_aif.mif" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>_aif.mif"
 
 "../../src/backup_registration.xml" - "!:\private\<%= $UID_STR %>\backup_registration.xml"
 
