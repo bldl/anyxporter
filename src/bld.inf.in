@@ -9,7 +9,7 @@ wins thumb armi
 <% end %>
 
 PRJ_MMPFILES
-<% if $IS_ELF %>
-//gnumakefile ..\..\src\icons.mk
+<% if $IS_ELF and $FEATURE_ICON %>
+gnumakefile ..\..\src\icons.mk
 <% end %>
 <%= $APP_BASENAME %>.mmp

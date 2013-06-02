@@ -243,6 +243,8 @@ project must implement.
 
   ;; On Symbian one must explicitly create a console to get one.
   (define/public (feature-console.attr) #t)
+
+  (define/public (feature-icon.attr) #t)
   
   ;; components...
 

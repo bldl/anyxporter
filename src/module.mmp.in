@@ -86,9 +86,9 @@ sourcepath ..\..\src
 
 LANG sc
 
+<% if $FEATURE_ICON %>
 <% if $IS_ELF %>
 
-/*
 start resource    <%= $UNIQUE_BASENAME %>.rss
 header
 targetpath resource\apps
@@ -97,7 +97,6 @@ end //resource
 start resource    <%= $UNIQUE_BASENAME %>_reg.rss
 targetpath 	  \private\10003a3f\import\apps
 end //resource
-*/
 
 <% else %>
 
@@ -106,6 +105,7 @@ RESOURCE <%= $UNIQUE_BASENAME %>_caption.rss
 
 AIF <%= $UNIQUE_BASENAME %>.aif ..\..\src <%= $UNIQUE_BASENAME %>aif.rss c8 context_pane_icon.bmp context_pane_icon_mask.bmp list_icon.bmp list_icon_mask.bmp
 
+<% end %>
 <% end %>
 
 <% if $IS_ELF %>

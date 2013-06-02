@@ -21,6 +21,9 @@ whatever printed to the console, as no console exists.
     (define/override (feature-console.attr)
       #f)
 
+    (define/override (feature-icon.attr)
+      #f)
+
     (define/override (component-datasrc.attr)
       'datasrc-mock)
 
