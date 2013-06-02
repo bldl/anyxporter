@@ -4,6 +4,7 @@
 
 Self-signed release build for Symbian v9 and higher.
 Uses mock data to avoid Qt dependency.
+Creates a console to show possible error output.
 
 |#
 
