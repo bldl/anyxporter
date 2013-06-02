@@ -6,9 +6,11 @@ int atpanic_throw(lua_State *L) {
   return 0;
 }
 
-// xxx for production builds should be more selective, can say edit source to exclude things
 extern "C"
 void my_lua_openlibs(lua_State* L) {
+  // we edited source of the original to exclude things,
+  // but only get those changes if compile from source;
+  // could copy/paste modified version over here
   luaL_openlibs(L);
 }
 
@@ -44,8 +46,11 @@ lua_State* my_lua_newstate_throwing() {
   return L;
 }
 
-std::unique_ptr<lua_State, lua_deleter_t> my_lua_newstate_smart() {
-  std::unique_ptr<lua_State, lua_deleter_t> 
-    p(my_lua_newstate_throwing(), lua_close);
-  return p;
+LuaStateSmart my_lua_newstate_smart() {
+  return LuaStateSmart(my_lua_newstate_throwing(), &lua_close);
 }
+
+void my_lua_newstate_set_smart(LuaStateSmart& ptr) {
+  ptr.set(my_lua_newstate_throwing(), &lua_close);
+}
+

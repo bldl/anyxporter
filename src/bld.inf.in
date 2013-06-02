@@ -1,0 +1,15 @@
+// Note that there is a bldmake bug (in GnuPoc?); a single
+// platform is not supported.
+
+PRJ_PLATFORMS
+<% if $IS_ELF %>
+winscw gcce
+<% else %>
+wins thumb armi
+<% end %>
+
+PRJ_MMPFILES
+<% if $IS_ELF %>
+//gnumakefile ..\..\src\icons.mk
+<% end %>
+<%= $APP_BASENAME %>.mmp

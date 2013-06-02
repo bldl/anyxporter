@@ -53,7 +53,7 @@ config :
 	./configure.sh $(VARIANT_NAME)
 
 .depend : GNUmakefile $(GENFILES)
-	fastdep $(DEPFLAGS) --remakedeptarget=$@ $(SRCFILES) > $@
+	fastdep $(DEPFLAGS) -D__cplusplus --remakedeptarget=$@ $(SRCFILES) > $@
 
 -include .depend
 
@@ -65,6 +65,8 @@ ifeq ($(WITH_QMAKE),true)
   else
     BUILD_RULE := qt-build
   endif
+else ifeq ($(WITH_SBSV1),true)
+  BUILD_RULE := sbsv1-build
 else
   BUILD_RULE := $(PROG)
 endif
@@ -109,6 +111,38 @@ qt-simulator-build : qt.mk
 qt-harmattan-build : qt.mk
 	@echo "NOTE:" use Qt Creator to build for MeeGo Harmattan
 
+BUILD_DIR := build/$(VARIANT_NAME)
+
+do-build-dir :
+	mkdir -p $(BUILD_DIR)
+
+WITH_GNUPOC := in-gnupoc-env --gcc $(GCC_NAME) $(KIT_NAME)
+
+RBFILTER := ruby -r src/current_config.rb -e 'require "erb"; puts(ERB.new(ARGF.read()).result(binding()))'
+
+SRCLIST_RB := src/source_list.rb
+RBFILTER_MMP := ruby -r src/current_config.rb -r $(SRCLIST_RB) -e 'require "erb"; puts(ERB.new(ARGF.read()).result(binding()))'
+
+bld-inf : do-build-dir
+	cat src/bld.inf.in | $(RBFILTER) > $(BUILD_DIR)/bld.inf
+
+mmp-info :
+	echo '$$SRCFILES = %w{' $(SRCFILES) '}' > $(SRCLIST_RB)
+
+mmp-file : do-build-dir mmp-info
+	cat src/module.mmp.in | $(RBFILTER_MMP) > $(BUILD_DIR)/$(APP_BASENAME).mmp
+
+do-bldmake : bld-inf mmp-file
+	cd $(BUILD_DIR) && $(WITH_GNUPOC) bldmake bldfiles
+
+do-abld :
+	cd $(BUILD_DIR) && $(WITH_GNUPOC) abld build -v $(ABLD_ARCHITECTURE) $(ABLD_VARIANT)
+
+abld-reallyclean :
+	cd $(BUILD_DIR) && $(WITH_GNUPOC) abld reallyclean
+
+sbsv1-build : do-bldmake do-abld
+
 test : build
 	@./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
@@ -116,7 +150,7 @@ test-post : build
 	@DO_HTTP_POST=true ./$(PROG) && cat $(EXPORT_OUTPUT_FILE)
 
 clean :
-	-rm $(PROG) $(OBJFILES) *.o moc_*.cpp qt.mk .depend
+	-rm $(PROG) $(OBJFILES) *.o moc_*.cpp qt.mk .depend Makefile
 
 install :
 	sudo aptitude install liblua5.1-0 liblua5.1-0-dev

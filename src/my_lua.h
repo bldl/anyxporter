@@ -57,6 +57,8 @@ extern "C" {
 #include <functional>
 #include <memory>
 
+#include "my_auto_ptr.hpp"
+
 class LuaPanic {}; // exception
 
 /** Panic handler function that throws LuaPanic. Of course you can
@@ -65,11 +67,13 @@ int atpanic_throw(lua_State* L);
 
 lua_State* my_lua_newstate_throwing();
 
-typedef std::function<void(lua_State*)> lua_deleter_t;
+typedef void (lua_deleter_t)(lua_State*);
 
-std::unique_ptr<lua_State, lua_deleter_t> my_lua_newstate_smart();
+typedef auto_ptr_op<lua_State, lua_deleter_t> LuaStateSmart;
 
-typedef std::unique_ptr<lua_State, lua_deleter_t> LuaStateSmart;
+LuaStateSmart my_lua_newstate_smart();
+
+void my_lua_newstate_set_smart(LuaStateSmart& ptr);
 #endif
 
 #endif /* __my_lua_h__ */

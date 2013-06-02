@@ -18,8 +18,16 @@
 ** ===================================================================
 */
 
-
+#if defined(__SYMBIAN32__)
+#define LUA_SYMBIAN
+#else
 #define LUA_USE_LINUX
+#endif
+
+#if !defined(NDEBUG)
+#define LUA_USE_APICHECK
+#endif
+
 
 /*
 @@ LUA_ANSI controls the use of non-ansi features.
@@ -60,6 +68,15 @@
 #define LUA_USE_LONGLONG	/* assume support for long long */
 #endif
 
+#if defined(LUA_SYMBIAN)
+#define LUA_USE_POSIX     /* not sure if have enough POSIX in Symbian */
+//#define LUA_USE_DLOPEN		/* needs an extra library: -ldl */
+//#define LUA_USE_READLINE	/* needs some extra libraries */
+#define LUA_USE_STRTODHEX	/* assume 'strtod' handles hex formats */
+#define LUA_USE_AFORMAT		/* assume 'printf' handles 'aA' specifiers */
+#define LUA_USE_LONGLONG	/* assume support for long long */
+#endif
+
 
 
 /*
@@ -86,7 +103,7 @@
 ** hierarchy or if you want to install your libraries in
 ** non-conventional directories.
 */
-#if defined(_WIN32)	/* { */
+#if defined(_WIN32) || defined(LUA_SYMBIAN)	/* { */
 /*
 ** In Windows, any exclamation mark ('!') in the path is replaced by the
 ** path of the directory of the executable file of the current process.
@@ -118,7 +135,7 @@
 ** CHANGE it if your machine does not use "/" as the directory separator
 ** and is not Windows. (On Windows Lua automatically uses "\".)
 */
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(LUA_SYMBIAN)
 #define LUA_DIRSEP	"\\"
 #else
 #define LUA_DIRSEP	"/"

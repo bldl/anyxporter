@@ -20,6 +20,11 @@
 #include "lualib.h"
 
 
+#ifdef LUA_SYMBIAN
+#define CLOCKS_PER_SEC 128
+#endif
+
+
 /*
 ** list of valid conversion specifiers for the 'strftime' function
 */

@@ -23,11 +23,7 @@ project must implement.
   
   (define/public (app-basename.attr) "exportemplapp")
   
-  (define/public (app-short-name.attr) "ExporTempl")
-
-  (define/public (app-long-name.attr) "ExporTemplApp")
-
-  (define/public (app-name.attr) (app-short-name.attr))
+  (define/public (app-name.attr) "ExporTemplApp")
 
   (define/public (vendor-name.attr) "BLDL")
 
@@ -139,6 +135,124 @@ project must implement.
                     )))))
   
   ) ;; end project-variant%
+
+(define-variant* symbian-variant% project-variant%
+  (super-new)
+  
+  ;; platform...
+  
+  (define/override (platform) 'symbian)
+
+  (define/public (s60-vernum.attr)
+    (if (send this with-qt.attr) 31 30))
+
+  ;; ELF file format.
+  ;; E32 image format.
+  ;; ARM EABI binary interface.
+  (define/public (is-elf.attr)
+    (>= (s60-vernum.attr) 30))
+
+  ;; PE file format.
+  ;; E32 image format.
+  (define/public (is-pe.attr)
+    (not (is-elf.attr)))
+  
+  (define/public (have-flogger.attr)
+    (>= (s60-vernum.attr) 20))
+  
+  ;; SDK...
+  
+  (define/public (kit-vernum.attr) 52)
+
+  (define/public (kit-name.attr)
+    (format "s60_~a" (kit-vernum.attr)))
+
+  ;; app info...
+  
+  (define/public (app-short-name.attr) "ETA")
+
+  (define/public (app-long-name.attr) (send this app-name.attr))
+
+  ;; http://www.developer.nokia.com/Community/Wiki/UID_Q%26As_(Symbian_Signed)
+  (define/public (uid-v8) #x0b1d1001) ;; development
+  
+  (define/public (uid-v9) #xeb1d1001) ;; development
+
+  (define/public (uid) (if (is-pe.attr) (uid-v8) (uid-v9)))
+  
+  (define/public (uid-num.attr)
+    (hexnum (uid)))
+
+  (define/public (uid-str.attr)
+    (format "~x" (uid)))
+
+  ;; Need something fairly unique. Typically include UID as suffix,
+  ;; but that can have its problems as we can have no single UID if
+  ;; and when targeting both v8 and v9.
+  (define/public (unique-basename.attr)
+    (format "~a_~a"
+            "bldl"
+            (send this app-basename.attr)
+            ))
+
+  ;; certification...
+
+  (define/public (signed.attr)
+    (if (< (s60-vernum.attr) 30) #f #t))
+  
+  (define/public (cert-name.attr)
+    "app-self")
+  
+  (define/public (capabilities.attr)
+    '(ReadUserData)) ;;  WriteUserData))
+  
+  ;; tools and libraries...
+  
+  (define/public (with-gnupoc.attr) #t)
+
+  ;; qmake and Symbian is a possible combination, but not necessarily
+  ;; ideal, except perhaps to find out the library dependencies.
+  ;; Without qmake need manual moc'king, though.
+  (define/override (with-qmake.attr) #f)
+
+  (define/public (with-sbsv1.attr) #t)
+
+  (define/public (gcc-name.attr) "default")
+  
+  (define/public (gcc-cxx-flags.attr) '())
+  
+  ;; runtime...
+
+  (define/override (lua-script-path.attr)
+    "e:\\") ;; xxx for now copy script here manually
+
+  (define/override (export-output-file.attr)
+    "e:\\outfile")
+
+  ;; features...
+
+  (define/public (abld-architecture.attr)
+    (if (is-pe.attr) "armi" "gcce"))
+  
+  (define/public (abld-variant.attr)
+    (if (send this feature-debugging.attr) "udeb" "urel"))
+
+  (define/public (feature-logging.attr)
+    (and (send this feature-debugging.attr)
+         (have-flogger.attr)))
+  
+  ;; components...
+
+  (define/override (component-ui.attr)
+    'ui-symbian-console)
+
+  ;; build...
+
+  ;; 'source-code
+  (define/override (lua-link-as.attr)
+    'source-code)
+
+  ) ;; end symbian-variant%
 
 #|
 

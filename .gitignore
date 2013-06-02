@@ -10,8 +10,9 @@ qt.mk
 exportemplapp
 current_config.*
 current.var.rkt
-source_list.pri
+source_list.*
 *.pro.user
 *.o
 moc_*.cpp
 outfile
+build/

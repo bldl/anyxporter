@@ -1,0 +1,177 @@
+<% if $IS_ELF %>
+targettype exe
+target <%= $UNIQUE_BASENAME %>.exe
+<% else %>
+targettype app
+target <%= $UNIQUE_BASENAME %>.app
+<% end %>
+
+uid 0x100039ce <%= "0x%08x" % $UID_NUM %>
+
+<% unless $IS_ELF %>
+targetpath     <%= "\\system\\apps\\" + $UNIQUE_BASENAME %>
+<% end %>
+
+// Stack size of 0x5000 is recommended for any but the most trivial
+// Symbian apps;;
+// running out of stack is likely to cause a KERN-EXEC 3...
+// not very informative, is it.
+// For Open C++ apps, the recommendation is 0x10000.
+epocstacksize 0x10000
+
+<% if $WITH_QT %>
+// qmake defaults to this setting
+EPOCHEAPSIZE    0x020000 0x800000
+<% end %>
+
+<% if $KIT_VERNUM >= 52 %>
+// SBSv2 support came with different include organization.
+APP_LAYER_SYSTEMINCLUDE
+<% end %>
+
+systeminclude \epoc32\include
+systeminclude \epoc32\include\stdapis
+systeminclude \epoc32\include\stdapis\stlport
+
+<% if $WITH_QT %>
+// xxx any Qt headers
+<% end %>
+
+<% if $WITH_QT_MOBILITY %>
+// Must be after any Qt headers, 
+// as there is some overlap with Qt itself.
+////systeminclude \epoc32\include\middleware
+<% end %>
+
+userinclude .
+<% for dir in $SRCDIRS %>
+userinclude ..\..\<%= dir %>
+<% end %>
+
+userinclude ..\..\lua-5.2.2\src
+
+library euser.lib
+
+<% if $FEATURE_LOGGING %>
+library flogger.lib
+<% end %>
+
+library libc.lib       // PIPS
+library libm.lib       // required for Lua
+library libstdcpp.lib  // Open C++
+
+<% if $WITH_QT %>
+library libdl.lib
+<% end %>
+
+<% if $WITH_QT %>
+LIBRARY         QtCore.lib
+//LIBRARY         QtNetwork.lib
+//LIBRARY         QtGui.lib
+//LIBRARY         QtXml.lib
+<% end %>
+
+<% for x in $SRCFILES 
+   dir, file = File.split(x) %>
+sourcepath ..\..\<%= dir.gsub("/", "\\") %>
+source <%= file %>
+<% end %>
+
+staticlibrary libcrt0.lib
+
+// This sourcepath also applies to the resource files.
+sourcepath ..\..\src
+
+LANG sc
+
+<% if $IS_ELF %>
+
+/*
+start resource    <%= $UNIQUE_BASENAME %>.rss
+header
+targetpath resource\apps
+end //resource
+
+start resource    <%= $UNIQUE_BASENAME %>_reg.rss
+targetpath 	  \private\10003a3f\import\apps
+end //resource
+*/
+
+<% else %>
+
+RESOURCE <%= $UNIQUE_BASENAME %>.rss
+RESOURCE <%= $UNIQUE_BASENAME %>_caption.rss
+
+AIF <%= $UNIQUE_BASENAME %>.aif ..\..\src <%= $UNIQUE_BASENAME %>aif.rss c8 context_pane_icon.bmp context_pane_icon_mask.bmp list_icon.bmp list_icon_mask.bmp
+
+<% end %>
+
+<% if $IS_ELF %>
+VENDORID 0
+CAPABILITY <%= $CAPABILITIES.join(' ') %>
+<% end %>
+
+<% unless $GCC_CXX_FLAGS.empty? %>
+OPTION GCCE <%= $GCC_CXX_FLAGS.join(' ') %>
+<% end %>
+
+// Gives warnings for C files.
+// http://bugreports.qt.nokia.com/browse/QTBUG-11629
+// "To get rid of the other warning, it appears that changes are required to the makmake tool modules (specifically, cl_bpabi.pm), or the gcce.mk base file."
+// This only really matters for libraries (with exports).
+//OPTION GCCE -fvisibility-inlines-hidden
+
+// No using the old client-server API.
+macro __HIDE_IPC_V1__
+
+<% if $WITH_QT %>
+MACRO           UNICODE
+MACRO           QT_KEYPAD_NAVIGATION
+MACRO           QT_SOFTKEYS_ENABLED
+MACRO           QT_USE_MATH_H_FLOATS
+MACRO           QT_CORE_LIB
+//MACRO           QT_NETWORK_LIB
+<% end %>
+
+<% if $WITH_QT_GUI %>
+MACRO           QT_GUI_LIB
+<% end %>
+
+<% if $WITH_QT_XML %>
+MACRO           QT_XML_LIB
+<% end %>
+
+<% if $WITH_QT and not $FEATURE_DEBUGGING %>
+MACRO           QT_NO_DEBUG_OUTPUT
+<% end %>
+
+<%
+=begin
+
+Copyright 2009-2013 Helsinki Institute for Information Technology
+(HIIT) and the authors. All rights reserved.
+
+Authors: Tero Hasu <tero.hasu@hut.fi>
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation files
+(the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+=end
+%>

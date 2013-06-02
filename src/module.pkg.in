@@ -1,0 +1,96 @@
+#{"<%= $APP_LONG_NAME %>"}, (0x<%= $UID_STR %>), <%= $MAJOR_VERSION %>, <%= $MINOR_VERSION %>, 0
+
+<% if $IS_ELF %>
+;; In S60 3rd ed SDKs, vendor name(s) are required.
+;; Apparently both unique and localized versions.
+
+;; Localised Vendor name
+%{"<%= $VENDOR_NAME %>"}
+
+;; Unique Vendor name
+:"<%= $VENDOR_NAME %>"
+<% end %>
+
+<% if $IS_ELF %>
+
+;; For these the string does not matter.
+
+;; Some of these platform IDs will be redundant, but not sure which,
+;; and it seems to be OK to have all of them.
+
+<% if $S60_VERNUM == 30 %>
+[0x101F7961], 0, 0, 0, 	{"S60 3rd Edition"}
+<% end %>
+
+[0x102032BE], 0, 0, 0, 	{"S60 3rd Edition, FP1"}
+[0x102752AE], 0, 0, 0, 	{"S60 3rd Edition, FP2"}
+[0x1028315F], 0, 0, 0, 	{"S60 5th Edition / Symbian^1"}
+[0x20022E6D], 0, 0, 0, 	{"Symbian^3 (including Symbian Anna)"}
+[0x2003A678], 0, 0, 0, 	{"Nokia Belle"}
+
+<% else %>
+
+;; For these the string "Series60ProductID" matters.
+
+;; This one should cover all 1st and 2nd Edition.
+(0x101F6F88), 0, 0, 0, 	{"Series60ProductID"}
+
+;;(0x101F6F88), 0, 0, 0, 	{"S60 1st Edition (0.9)"}
+;;(0x101F8202), 0, 0, 0, 	{"S60 1st Edition, FP1"}
+;;(0x101F7960), 0, 0, 0, 	{"S60 2nd Edition"}
+;;(0x101F9115), 0, 0, 0, 	{"S60 2nd Edition, FP1"}
+;;(0x10200BAB), 0, 0, 0, 	{"S60 2nd Edition, FP2"}
+;;(0x102032BD), 0, 0, 0, 	{"S60 2nd Edition, FP3"}
+
+<% end %>
+
+;; Take care not to have urel/udeb specifics here.
+<% if $IS_ELF %>
+
+"epoc32/release/<%= $ABLD_ARCHITECTURE %>/<%= $ABLD_VARIANT %>/<%= $UNIQUE_BASENAME %>.exe" - "!:\sys\bin\<%= $UNIQUE_BASENAME %>.exe"
+
+//"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>.rsc" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>.rsc"
+//"epoc32/data/z/private/10003a3f/import/apps/<%= $UNIQUE_BASENAME %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= $UNIQUE_BASENAME %>_reg.rsc"
+//"epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>_aif.mif" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>_aif.mif"
+
+"../../src/backup_registration.xml" - "!:\private\<%= $UID_STR %>\backup_registration.xml"
+
+<% else %>
+
+"epoc32/release/<%= $ABLD_ARCHITECTURE %>/<%= $ABLD_VARIANT %>/<%= $UNIQUE_BASENAME %>.app" - "!:\system\apps\<%= $UNIQUE_BASENAME %>\<%= $UNIQUE_BASENAME %>.app"
+"epoc32/data/z/system/apps/<%= $UNIQUE_BASENAME %>/<%= $UNIQUE_BASENAME %>.aif" - "!:\system\apps\<%= $UNIQUE_BASENAME %>\<%= $UNIQUE_BASENAME %>.aif"
+"epoc32/data/z/system/apps/<%= $UNIQUE_BASENAME %>/<%= $UNIQUE_BASENAME %>.rsc" - "!:\system\apps\<%= $UNIQUE_BASENAME %>\<%= $UNIQUE_BASENAME %>.rsc"
+"epoc32/data/z/system/apps/<%= $UNIQUE_BASENAME %>/<%= $UNIQUE_BASENAME %>_caption.rsc" - "!:\system\apps\<%= $UNIQUE_BASENAME %>\<%= $UNIQUE_BASENAME %>_caption.rsc"
+
+<% end %>
+
+<%
+=begin
+
+Copyright 2009-2013 Helsinki Institute for Information Technology
+(HIIT) and the authors. All rights reserved.
+
+Authors: Tero Hasu <tero.hasu@hut.fi>
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation files
+(the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+=end
+%>

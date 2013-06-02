@@ -10,7 +10,13 @@
 #define GCC_VERSION (__GNUC__ * 10000				\
 		     + __GNUC_MINOR__ * 100			\
 		     + __GNUC_PATCHLEVEL__)
+
+#if GCC_VERSION >= 40600
+#define HAVE_MOVE_SEMANTICS 1
+#else
+#define HAVE_MOVE_SEMANTICS 0
 #endif
+#endif // defined(__GNUC__)
 
 #endif /* __my_platform_h__ */
 

@@ -7,7 +7,13 @@ namespace luastate
 {
   typedef LuaStateSmart LuaState;
 
-  void init(LuaState& st);
+  inline void init(LuaState& st) {
+    my_lua_newstate_set_smart(st);
+  }
+
+  inline void close(LuaState& st) {
+    st.clear();
+  }
 }
 
 #include "datasrc_concrete.hpp"
