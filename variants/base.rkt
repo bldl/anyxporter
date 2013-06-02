@@ -240,11 +240,16 @@ project must implement.
   (define/public (feature-logging.attr)
     (and (send this feature-debugging.attr)
          (have-flogger.attr)))
+
+  ;; On Symbian one must explicitly create a console to get one.
+  (define/public (feature-console.attr) #t)
   
   ;; components...
 
   (define/override (component-ui.attr)
-    'ui-symbian-console)
+    (if (feature-console.attr)
+        'ui-symbian-console
+        'ui-console))
 
   ;; build...
 

@@ -77,7 +77,9 @@ sourcepath ..\..\<%= dir.gsub("/", "\\") %>
 source <%= file %>
 <% end %>
 
+<% unless $FEATURE_CONSOLE %>
 staticlibrary libcrt0.lib
+<% end %>
 
 // This sourcepath also applies to the resource files.
 sourcepath ..\..\src
@@ -108,6 +110,9 @@ AIF <%= $UNIQUE_BASENAME %>.aif ..\..\src <%= $UNIQUE_BASENAME %>aif.rss c8 cont
 
 <% if $IS_ELF %>
 VENDORID 0
+<% end %>
+
+<% if $IS_ELF and not $CAPABILITIES.empty? %>
 CAPABILITY <%= $CAPABILITIES.join(' ') %>
 <% end %>
 
