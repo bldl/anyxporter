@@ -29,9 +29,13 @@ static TInt doMainL()
     engine::exportData();
   } catch (const std::exception& ex) {
     err = 1;
-    _LIT(KFmt, "std::exception occurred: %s");
-    TPtrC8 ptr((const TUint8*)ex.what());
-    console->Printf(KFmt, &ptr);
+    _LIT(KFmt, "std::exception occurred: %S");
+    TPtrC8 what((const TUint8*)ex.what());
+    RBuf16 buf16;
+    buf16.CreateL(what.Length());
+    buf16.Copy(what); // convert
+    console->Printf(KFmt, &buf16);
+    buf16.Close();
   } catch(...) {
     err = 2;
     _LIT(KFmt, "non-std::exception occurred");
