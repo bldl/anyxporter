@@ -1,6 +1,12 @@
 * DONE Qt Simulator port
 * DONE Harmattan port
 * DONE Symbian port
+
+  Symbian builds are not (presently) supported with qmake.
+  Possible issues with compatibility with different Qt releases
+  unknown. In principle they should be backwards binary compatible,
+  at least. Builds tested with QT 4.7.0 and QTM 1.1.0.
+
 * HTTP POSTing should be made to handle posting errors cleanly
 * BlackBerry 10 port?
 * Sailfish port?

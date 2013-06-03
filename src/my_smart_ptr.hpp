@@ -1,5 +1,5 @@
-#ifndef __my_auto_ptr_hpp__
-#define __my_auto_ptr_hpp__
+#ifndef __my_smart_ptr_hpp__
+#define __my_smart_ptr_hpp__
 
 #include "my_platform.h"
 
@@ -119,4 +119,4 @@ private:
 #define UNIQUE_PTR auto_ptr_delete
 #endif
 
-#endif /* __my_auto_ptr_hpp__ */
+#endif /* __my_smart_ptr_hpp__ */

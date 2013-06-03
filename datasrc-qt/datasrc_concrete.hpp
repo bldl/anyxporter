@@ -1,7 +1,7 @@
 #ifndef __datasrc_concrete_hpp__
 #define __datasrc_concrete_hpp__
 
-#include "my_auto_ptr.hpp"
+#include "my_smart_ptr.hpp"
 
 #include <QContactManager>
 #include <QList>

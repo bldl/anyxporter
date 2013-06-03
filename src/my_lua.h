@@ -57,7 +57,7 @@ extern "C" {
 #include <functional>
 #include <memory>
 
-#include "my_auto_ptr.hpp"
+#include "my_smart_ptr.hpp"
 
 class LuaPanic {}; // exception
 
