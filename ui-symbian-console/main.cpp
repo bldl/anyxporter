@@ -17,6 +17,7 @@
 #include <QtGlobal>
 #endif
 
+/** May leave or return an error code. */
 static TInt doMainL()
 {
   _LIT(KConsoleTitle, "ExporTemplApp");
@@ -48,10 +49,8 @@ static TInt doMainL()
   _LIT(KPressAnyKey, " [press any key]");
   console->Printf(KPressAnyKey);
   console->Getch();
-  if (err)
-    User::Leave(err);
   CleanupStack::PopAndDestroy(console);
-  return 0;
+  return err;
 }
 
 #if WITH_QT
@@ -62,7 +61,7 @@ static TInt doSubMainQt(int argc, char *argv[], char *envp[])
   // cleanup for app proper before letting it fall out of scope.
   QCoreApplication app(argc, argv);
 
-  TRAPD(err, doMainL());
+  TRAPD(err, err = doMainL());
   return err;
 }
 

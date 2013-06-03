@@ -3,6 +3,7 @@
 #include "my_nullptr.hpp"
 
 #include <QDebug>
+//#include <QImage> // requires QtGui library
 
 #include <assert.h>
 #include <stdexcept>
@@ -86,6 +87,14 @@ namespace datasrc
 	  } else if (vv.canConvert<QStringList>()) {
 	    QStringList const ss = vv.toStringList();
 	    pushStringList(L, ss); // as new array of string
+	    lua_setfield(L, -2, vn.toUtf8().data());
+	  } else if (vv.type() == QVariant::Image) {
+	    lua_pushstring(L, "[QImage]");
+	    /*
+	    // We could probably save any images.
+	    QImage const img = vv.value<QImage>(QVariant::Image);
+	    lua_pushstring(L, img.text().toUtf8().data());
+	    */
 	    lua_setfield(L, -2, vn.toUtf8().data());
 	  } else {
 	    throw std::runtime_error
