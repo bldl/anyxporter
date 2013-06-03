@@ -34,13 +34,14 @@ systeminclude \epoc32\include\stdapis
 systeminclude \epoc32\include\stdapis\stlport
 
 <% if $WITH_QT %>
-// xxx any Qt headers
+systeminclude \epoc32\..\..\..\qt-latest\include\QtCore
+systeminclude \epoc32\..\..\..\qt-latest\include
+systeminclude \epoc32\..\..\..\qt-latest\mkspecs\common\symbian\stl-off
+systeminclude \epoc32\..\..\..\qt-latest\mkspecs\common\symbian
 <% end %>
 
 <% if $WITH_QT_MOBILITY %>
-// Must be after any Qt headers, 
-// as there is some overlap with Qt itself.
-////systeminclude \epoc32\include\middleware
+systeminclude \epoc32\include\app
 <% end %>
 
 userinclude .
@@ -69,6 +70,10 @@ LIBRARY         QtCore.lib
 //LIBRARY         QtNetwork.lib
 //LIBRARY         QtGui.lib
 //LIBRARY         QtXml.lib
+<% end %>
+
+<% if $WITH_QT_MOBILITY %>
+library QtContacts.lib
 <% end %>
 
 <% for x in $SRCFILES 

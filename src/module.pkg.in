@@ -49,6 +49,7 @@
 
 "epoc32/release/<%= $ABLD_ARCHITECTURE %>/<%= $ABLD_VARIANT %>/<%= $UNIQUE_BASENAME %>.exe" - "!:\sys\bin\<%= $UNIQUE_BASENAME %>.exe"
 
+;; Note that on old phones [backup/restore does not work for DevCert signed apps http://wiki.forum.nokia.com/index.php/KIS000544_-_Backup_and_restore_fails_for_applications_using_a_developer_certificate].
 "../../src/backup_registration.xml" - "!:\private\<%= $UID_STR %>\backup_registration.xml"
 
 <% if $FEATURE_ICON %>

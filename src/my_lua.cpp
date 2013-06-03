@@ -51,6 +51,6 @@ LuaStateSmart my_lua_newstate_smart() {
 }
 
 void my_lua_newstate_set_smart(LuaStateSmart& ptr) {
-  ptr.set(my_lua_newstate_throwing(), &lua_close);
+  ptr.reset(my_lua_newstate_throwing(), &lua_close);
 }
 

@@ -12,8 +12,7 @@ namespace datasrc
 {
 
   void open(Db& db) {
-    db = std::move(unique_ptr<QContactManager>
-		   (new QContactManager(nullptr)));
+    db.reset(new QContactManager(nullptr));
     #ifndef QT_NO_DEBUG
     // informative to view 'x' in debugger
     auto x = db->detailDefinitions();

@@ -1,15 +1,14 @@
 #ifndef __datasrc_concrete_hpp__
 #define __datasrc_concrete_hpp__
 
+#include "my_auto_ptr.hpp"
+
 #include <QContactManager>
 #include <QList>
 #include <QListIterator>
 
 QT_USE_NAMESPACE
 QTM_USE_NAMESPACE
-
-#include <memory>
-using std::unique_ptr;
 
 // Qt Mobility based data source.
 namespace datasrc {
@@ -26,7 +25,7 @@ namespace datasrc {
     semantics, and does ensure cleanup of locals that are not moved
     out or explicitly deleted.
   */
-  typedef unique_ptr<QContactManager> Db;
+  typedef UNIQUE_PTR<QContactManager> Db;
 
   struct Iter {
     QContactManager* db;
