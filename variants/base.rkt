@@ -92,6 +92,9 @@ project must implement.
         "qt_contact_to_xml.lua"
         "contact_to_xml.lua"))
 
+  (define/public (lua-user-script-pathname.attr)
+    "format_data.lua")
+  
   (define/public (export-output-file.attr)
     "outfile")
 
@@ -237,10 +240,15 @@ project must implement.
   ;; runtime...
 
   (define/override (lua-script-path.attr)
-    "e:\\") ;; xxx for now copy script here manually
+    "\\") ;; xxx for now copy script here manually
 
+  ;; An easy location for the user to copy a script to.
+  ;; The root of any drive.
+  (define/override (lua-user-script-pathname.attr)
+    "\\format_data.lua")
+  
   (define/override (export-output-file.attr)
-    "e:\\outfile")
+    "c:\\eta_output")
 
   ;; features...
 

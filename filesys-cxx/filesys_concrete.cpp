@@ -24,13 +24,20 @@ namespace filesys
 
   void luaLoadFormatter(LuaState& st) {
     lua_State* const L = st.get();
-    int err = luaL_loadfile(L, LUA_SCRIPT_PATH LUA_EXPORT_SCRIPT);
+
+    int err = luaL_loadfile(L, LUA_USER_SCRIPT_PATHNAME);
     if (err) {
-      char const* const cs = lua_tostring(L, -1);
-      std::string errString(cs);
-      lua_pop(L, 1);
-      throw std::runtime_error(errString);
+      lua_pop(L, 1); // error string
+
+      err = luaL_loadfile(L, LUA_SCRIPT_PATH LUA_EXPORT_SCRIPT);
+      if (err) {
+	char const* const cs = lua_tostring(L, -1);
+	std::string errString(cs);
+	lua_pop(L, 1);
+	throw std::runtime_error(errString);
+      }
     }
+
     // Evaluate loaded chunk.
     lua_call(L, 0, 0);
   }
