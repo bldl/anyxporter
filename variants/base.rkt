@@ -240,7 +240,7 @@ project must implement.
   ;; runtime...
 
   (define/override (lua-script-path.attr)
-    "\\") ;; xxx for now copy script here manually
+    "\\resource\\apps\\")
 
   ;; An easy location for the user to copy a script to.
   ;; The root of any drive.

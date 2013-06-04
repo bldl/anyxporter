@@ -54,9 +54,11 @@
 
 <% if $FEATURE_ICON %>
 "epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>.rsc" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>.rsc"
-"epoc32/data/z/private/10003a3f/import/apps/<%= $UNIQUE_BASENAME %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= $UNIQUE_BASENAME %>_reg.rsc"
 "epoc32/data/z/resource/apps/<%= $UNIQUE_BASENAME %>_aif.mif" - "!:\resource\apps\<%= $UNIQUE_BASENAME %>_aif.mif"
+"epoc32/data/z/private/10003a3f/import/apps/<%= $UNIQUE_BASENAME %>_reg.rsc" - "!:\private\10003a3f\import\apps\<%= $UNIQUE_BASENAME %>_reg.rsc"
 <% end %>
+
+"../../lua-src/<%= $LUA_EXPORT_SCRIPT %>" - "!:<%= $LUA_SCRIPT_PATH %><%= $LUA_EXPORT_SCRIPT %>"
 
 <% else %>
 
