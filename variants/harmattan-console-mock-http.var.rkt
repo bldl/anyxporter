@@ -21,9 +21,9 @@ and hence lacks QHttpPart.
     parent%
     (super-new)
     
-    (define/override (with-qt-mobility.attr)
+    (define/override (feature-qt-contacts.attr)
       #f)
-  
+    
     (define/override (feature-http-post.attr)
       #t)
     

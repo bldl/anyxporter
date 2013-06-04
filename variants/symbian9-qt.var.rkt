@@ -17,20 +17,8 @@ Creates a console to show possible error output.
     symbian-variant%
     (super-new)
 
-    (define/override (with-qt.attr)
+    (define/override (feature-qt-contacts.attr)
       #t)
-
-    (define/override (with-qt-mobility.attr)
-      #t)
-
-    (define/override (with-qmake.attr)
-      #f)
-
-    (define/override (component-datasrc.attr)
-      'datasrc-qt)
-
-    (define/override (lua-export-script.attr)
-      "qt_contact_to_xml.lua")
 
     ;; Without sufficient capabilities we simply get a KERN-EXEC 3
     ;; from the Qt Mobility Contacts API. How nice. At least

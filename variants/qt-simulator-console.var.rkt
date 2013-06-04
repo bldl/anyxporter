@@ -22,18 +22,9 @@ apparently.
     (define/override (platform)
       'qt-simulator)
     
-    (define/override (with-qt.attr)
+    (define/override (feature-qt-contacts.attr)
       #t)
   
-    (define/override (with-qt-mobility.attr)
-      #t)
-  
-    (define/override (lua-export-script.attr)
-      "qt_contact_to_xml.lua")
-
-    (define/override (component-datasrc.attr)
-      'datasrc-qt)
-
     (define/override (component-ui.attr)
       'ui-qtconsole)
     

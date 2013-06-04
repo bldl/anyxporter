@@ -5,7 +5,9 @@
 Self-signed release build for Symbian v9 and higher. Uses mock data to
 avoid Qt dependency. Has a C++ standard 'main' function, which works,
 but the problem is that cannot see any output if there an exception or
-whatever printed to the console, as no console exists.
+whatever printed to the console, as no console exists. This variant
+also has no icon, so will want to use fshell or PyS60 REPL or
+something to launch it.
 
 |#
 

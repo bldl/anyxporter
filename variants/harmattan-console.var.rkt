@@ -21,10 +21,7 @@ available.
     (define/override (platform)
       'harmattan)
     
-    (define/override (with-qt.attr)
-      #t)
-  
-    (define/override (with-qt-mobility.attr)
+    (define/override (feature-qt-contacts.attr)
       #t)
   
     (define/override (lua-link-as.attr)
@@ -35,9 +32,6 @@ available.
 
     (define/override (lua-export-script.attr)
       "qt_contact_to_xml.lua")
-
-    (define/override (component-datasrc.attr)
-      'datasrc-qt)
 
     (define/override (component-ui.attr)
       'ui-qtconsole)

@@ -20,9 +20,6 @@ This variant is handy for testing uploading on the PC.
     (define/override (with-qt.attr)
       #t)
   
-    (define/override (with-qt-mobility.attr)
-      #f)
-  
     (define/override (feature-http-post.attr)
       #t)
     

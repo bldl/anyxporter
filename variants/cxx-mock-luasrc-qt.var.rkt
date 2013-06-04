@@ -20,9 +20,6 @@ Mobility is not used.
     (define/override (with-qt.attr)
       #t)
   
-    (define/override (with-qt-mobility.attr)
-      #f)
-  
     (define/override (lua-link-as.attr)
       'source-code)
     

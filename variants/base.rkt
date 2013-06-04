@@ -61,22 +61,23 @@ project must implement.
   (define/public (feature-http-post.attr)
     #f)
 
+  (define/public (feature-qt-contacts.attr)
+    #f)
+
   ;; tools and libraries...
   
-  (define/public (with-qt.attr)
-    #f)
-
-  (define/public (with-qt-mobility.attr)
-    #f)
-
   (define/public (with-qt-network.attr)
     (feature-http-post.attr))
   
+  (define/public (with-qt-mobility.attr)
+    (feature-qt-contacts.attr))
+
+  (define/public (with-qt.attr)
+    (or (with-qt-network.attr)
+        (with-qt-mobility.attr)))
+
   (define/public (with-qmake.attr)
     (with-qt.attr))
-
-  (define/public (with-gnumake.attr)
-    (not (with-qmake.attr)))
 
   (define/public (with-magnolia.attr)
     #f)
@@ -87,7 +88,9 @@ project must implement.
     "lua-src/")
 
   (define/public (lua-export-script.attr)
-    "contact_to_xml.lua")
+    (if (feature-qt-contacts.attr)
+        "qt_contact_to_xml.lua"
+        "contact_to_xml.lua"))
 
   (define/public (export-output-file.attr)
     "outfile")
@@ -95,10 +98,12 @@ project must implement.
   ;; components...
 
   (define/public (component-datasrc.attr)
-    'datasrc-dummy)
+    (if (feature-qt-contacts.attr)
+        'datasrc-qt
+        'datasrc-dummy))
   
   (define/public (component-engine.attr)
-    (if (with-magnolia.attr) 'engine-mg 'engine-hw))
+    'engine-hw)
 
   (define/public (component-filesys.attr)
     'filesys-cxx)
@@ -188,10 +193,11 @@ project must implement.
 
   ;; Need something fairly unique. Typically include UID as suffix,
   ;; but that can have its problems as we can have no single UID if
-  ;; and when targeting both v8 and v9.
+  ;; and when targeting both v8 and v9. Vendor name should be fairly
+  ;; unique.
   (define/public (unique-basename.attr)
     (format "~a_~a"
-            "bldl"
+            (string-downcase (send this vendor-name.attr))
             (send this app-basename.attr)
             ))
 
@@ -203,8 +209,15 @@ project must implement.
   (define/public (cert-name.attr)
     "app-self")
   
-  (define/public (capabilities.attr) '())
-  ;;'(ReadUserData WriteUserData)
+  (define/public (capabilities.attr)
+    (filter
+     identity
+     (list
+      (and (send this feature-http-post.attr)
+           'NetworkServices)
+      (and (send this feature-qt-contacts.attr)
+           'ReadUserData)
+      )))
   
   ;; tools and libraries...
   
@@ -255,7 +268,8 @@ project must implement.
 
   ;; build...
 
-  ;; 'source-code
+  ;; A 'static-lib would be another option, and preferable for build
+  ;; times.
   (define/override (lua-link-as.attr)
     'source-code)
 
