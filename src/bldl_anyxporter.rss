@@ -1,4 +1,4 @@
-NAME EXTA // max 4 letter resource ID
+NAME ANYX // max 4 letter resource ID
 
 #include <eikon.rh>
 #include "current_config.hrh"
@@ -15,7 +15,7 @@ RESOURCE TBUF { buf = UNIQUE_BASENAME; }
 
 #ifdef EKA2
 // 3rd ed...
-RESOURCE LOCALISABLE_APP_INFO r_exportemplapp_localisable_app_info
+RESOURCE LOCALISABLE_APP_INFO r_anyxporter_localisable_app_info
     {
     short_caption = APP_SHORT_NAME;
     caption_and_icon = 
@@ -23,7 +23,7 @@ RESOURCE LOCALISABLE_APP_INFO r_exportemplapp_localisable_app_info
         {
         caption = APP_NAME;
         number_of_icons = 1;
-	icon_file = "\\resource\\apps\\bldl_exportemplapp_aif.mif";
+	icon_file = "\\resource\\apps\\bldl_anyxporter_aif.mif";
 	};
     }
 #endif

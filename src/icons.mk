@@ -1,6 +1,6 @@
 ZDIR=$(EPOCROOT)epoc32/data/z
 TARGETDIR=$(ZDIR)/resource/apps
-ICONTARGETFILENAME=$(TARGETDIR)/bldl_exportemplapp_aif.mif
+ICONTARGETFILENAME=$(TARGETDIR)/bldl_anyxporter_aif.mif
 
 do_nothing :
 

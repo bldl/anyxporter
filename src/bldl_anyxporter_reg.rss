@@ -1,6 +1,6 @@
 #include "current_config.hrh"
 #include <appinfo.rh>
-#include <bldl_exportemplapp.rsg>
+#include <bldl_anyxporter.rsg>
 
 UID2 KUidAppRegistrationResourceFile
 UID3 UID_NUM
@@ -8,8 +8,8 @@ UID3 UID_NUM
 RESOURCE APP_REGISTRATION_INFO
   {
   app_file = UNIQUE_BASENAME;
-  localisable_resource_file = "\\resource\\apps\\bldl_exportemplapp";
-  localisable_resource_id = R_EXPORTEMPLAPP_LOCALISABLE_APP_INFO;
+  localisable_resource_file = "\\resource\\apps\\bldl_anyxporter";
+  localisable_resource_id = R_ANYXPORTER_LOCALISABLE_APP_INFO;
 
   embeddability = KAppNotEmbeddable;
   newfile = KAppDoesNotSupportNewFile;

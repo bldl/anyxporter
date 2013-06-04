@@ -20,7 +20,7 @@
 /** May leave or return an error code. */
 static TInt doMainL()
 {
-  _LIT(KConsoleTitle, "ExporTemplApp");
+  _LIT(KConsoleTitle, "Anyxporter");
   CConsoleBase* console = Console::NewL(KConsoleTitle,
 					TSize(KConsFullScreen,
 					      KConsFullScreen));
@@ -99,7 +99,7 @@ GLDEF_C TInt E32Main() // main function called by E32
   } else {
     err = KErrNoMemory;
   }
-  _LIT(KAppPanic, "ETA");
+  _LIT(KAppPanic, "Anyxport");
   __ASSERT_ALWAYS(!err, User::Panic(KAppPanic, err));
   delete cleanup;
   __UHEAP_MARKEND;

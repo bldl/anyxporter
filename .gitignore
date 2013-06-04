@@ -7,7 +7,7 @@
 Makefile
 local.mk
 qt.mk
-exportemplapp
+anyxporter
 current_config.*
 current.var.rkt
 source_list.*

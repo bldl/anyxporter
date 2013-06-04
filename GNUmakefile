@@ -6,10 +6,10 @@ default : build
 
 # generate for default variant if does not exist at all
 src/current_config.mk :
-	./configure.sh cxx-dummy
+	./configure.sh cxx-mock
 
 config-default :
-	./configure.sh cxx-dummy
+	./configure.sh cxx-mock
 
 include src/current_config.mk
 

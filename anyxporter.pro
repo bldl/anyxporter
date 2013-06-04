@@ -32,7 +32,7 @@ WITH_QT_MOBILITY {
   MOBILITY = contacts
 }
 
-TARGET = exportemplapp
+TARGET = anyxporter
 QMAKE_CXXFLAGS += -std=c++0x
 
 TEMPLATE = app
@@ -62,10 +62,10 @@ IS_HARMATTAN {
 }
 
 contains(MEEGO_EDITION,harmattan) {
-  target.path = /opt/exportemplapp/bin
+  target.path = /opt/anyxporter/bin
   INSTALLS += target
 
   scripts.files = $$PWD/lua-src/*.lua
-  scripts.path = /opt/exportemplapp/scripts
+  scripts.path = /opt/anyxporter/scripts
   INSTALLS += scripts
 }

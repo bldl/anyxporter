@@ -65,6 +65,6 @@ AutoGenerateAegisFile
 
 	</request>
 
-	<for path="/opt/exportemplapp/bin/exportemplapp" />
+	<for path="/opt/anyxporter/bin/anyxporter" />
 	<for path="applauncherd-launcher::/usr/bin/applauncherd.bin" id="" />
 </aegis>

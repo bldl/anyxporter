@@ -21,9 +21,9 @@ project must implement.
 
   (define/public (platform-str.attr) (symbol->string (platform)))
   
-  (define/public (app-basename.attr) "exportemplapp")
+  (define/public (app-basename.attr) "anyxporter")
   
-  (define/public (app-name.attr) "ExporTemplApp")
+  (define/public (app-name.attr) "Anyxporter")
 
   (define/public (vendor-name.attr) "BLDL")
 
@@ -177,7 +177,7 @@ project must implement.
 
   ;; app info...
   
-  (define/public (app-short-name.attr) "ETA")
+  (define/public (app-short-name.attr) "Anyxport")
 
   (define/public (app-long-name.attr) (send this app-name.attr))
 
@@ -248,7 +248,7 @@ project must implement.
     "\\format_data.lua")
   
   (define/override (export-output-file.attr)
-    "c:\\eta_output")
+    "c:\\anyxporter_output")
 
   ;; features...
 

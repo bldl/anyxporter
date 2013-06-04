@@ -28,7 +28,7 @@ available.
       'source-code)
     
     (define/override (lua-script-path.attr)
-      "/opt/exportemplapp/scripts/")
+      "/opt/anyxporter/scripts/")
 
     (define/override (lua-export-script.attr)
       "qt_contact_to_xml.lua")

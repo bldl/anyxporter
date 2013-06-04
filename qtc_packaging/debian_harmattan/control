@@ -1,4 +1,4 @@
-Source: exportemplapp
+Source: anyxporter
 Section: user/other
 Priority: optional
 Maintainer: Tero Hasu <tero.hasu@ii.uib.no>
@@ -6,12 +6,12 @@ Build-Depends: debhelper (>= 5), libqt4-dev
 Standards-Version: 3.7.3
 Homepage: <insert the upstream URL, if relevant>
 
-Package: exportemplapp
+Package: anyxporter
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ExporTemplApp (Exporter Template Application)
+Description: Anyxporter
  An application for exporting PIM data.
  Intended to have multiple alternative backends for
  different data sources, implemented for different
  platforms, too. With scriptable export file format.
-XSBC-Maemo-Display-Name: exportemplapp
+XSBC-Maemo-Display-Name: anyxporter
