@@ -15,13 +15,16 @@ configuration for it, giving the variant a hopefully descriptive name.
 
 Currently only contact data is supported, and only using the Qt
 Mobility Contacts API. Not all conceivable data available through the
-API can be exported, but the philosophy is to error out if anything
+API is currently exportable, but the philosophy is to error out if anything
 unexportable is encountered (or at least add a note to the exported
 data that something unexportable was present in a given context),
-after which more code needs adding to handle that type of data. And
-only XML export of contacts data is currently supported. Only saving
-as a file on a local filesystem is fully supported. There is also
-initial HTTP POSTing code in place, and we hope to add other
+after which more code needs adding to handle that type of data.
+Exporting has so far been successfully tried on Qt Simulator, MeeGo
+Harmattan (Maemo 6), and Symbian.
+
+Only XML export of contacts data is currently supported, and only
+saving as a file on a local filesystem is fully supported. There is
+also initial HTTP POSTing code in place, and we hope to add other
 transmission options, such as Bluetooth OBEX Push.
 
 There is currently no GUI implemented, so your target better have a
@@ -29,26 +32,39 @@ console of some sort so that you can run the program and see any
 possible error output. Some of the Symbian configurations create a
 console themselves so that they can be used standalone.
 
+Work on Magnolia integration is still work in progress with respect to
+the build system, and is for now maintained in a separate =magnolia=
+branch.
+
 * Building and Running
 
   Run the configure script, specifying your chosen variant, e.g.
 
-  ./configure.sh variants/cxx-mock.var.rkt
+  : ./configure.sh variants/cxx-mock.var.rkt
 
   and then
 
-  make test
+  : make test
 
   provided that building and execution can be done natively for the
   configuration. This is not the case for the Qt Simulator build, for
   example, so for that
 
-  ./configure.sh qt-simulator-console.var.rkt
-  make
+  : ./configure.sh qt-simulator-console.var.rkt
+  : make
 
   to produce a prodect configuration for Qt Creator, and then do
   building and running under the IDE.
 
   If the output formatter script is specified as a relative path, make
   sure to check the working directory of any IDE run configuration.
+
+* Prebuilt Binaries
+
+  Building for the desktop and MeeGo Harmattan should present no
+  problems, but the Symbian build scripts assume a non-standard style
+  of SDK installation (to support builds on Linux and Mac OS X). See
+  the =download= branch for prebuilt binaries, e.g.
+
+  - [[https://github.com/bldl/anyxporter/raw/download/anyxporter-0.01-symbian9-qt.sisx][contacts exporter for Symbian]]
 
