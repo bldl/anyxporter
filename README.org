@@ -67,4 +67,5 @@ branch.
   the =download= branch for prebuilt binaries, e.g.
 
   - [[https://github.com/bldl/anyxporter/raw/download/anyxporter-0.01-symbian9-qt.sisx][contacts exporter for Symbian]]
+  - [[https://github.com/bldl/anyxporter/raw/download/anyxporter_0.01_armel.deb][contacts exporter for Harmattan]]
 

@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Tero Hasu <tero.hasu@ii.uib.no>
 Build-Depends: debhelper (>= 5), libqt4-dev
 Standards-Version: 3.7.3
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/bldl/anyxporter
 
 Package: anyxporter
 Architecture: any
